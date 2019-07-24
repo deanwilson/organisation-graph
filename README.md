@@ -97,3 +97,15 @@ An example with less abstract values:
       - 'Danger Room':
           owner: 'X-Men'
 
+## Notes
+
+This graph is all based on here and now. There are no date relationships
+available, such as looking up the line manager six months ago.
+
+### Author
+
+  [Dean Wilson](https://www.unixdaemon.net)
+
+### License
+
+ * Released under the GPLv2
