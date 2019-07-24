@@ -1,0 +1,9 @@
+services:
+  Cerebro:
+      owner: 'X-Men'
+  "Danger Room":
+      owner: 'X-Men'
+  "Ultimate Nullifier":
+      owner: 'Fantastic Four'
+  "Prison 42":
+      owner: 'Fantastic Four'
