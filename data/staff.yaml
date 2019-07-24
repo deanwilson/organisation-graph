@@ -1,0 +1,99 @@
+## The creator
+
+Stan Lee:
+  is_a: 'man-made'
+  manages:
+    - Susan Storm
+    - Clint Barton
+    - Scott Summers
+
+## Fantastic Four
+Susan Storm:
+  assigned_to:
+    - Fantastic Four
+  is_a: 'man-made'
+  manages:
+    - Reed Richards
+    - Johnny Storm
+    - Ben Grimm
+  member_of: Marvel-616 # Department
+Reed Richards:
+  assigned_to:
+    - Fantastic Four
+  is_a: 'man-made'
+  member_of: Marvel-616
+Johnny Storm:
+  assigned_to:
+    - Fantastic Four
+  is_a: 'man-made'
+  member_of: Marvel-616
+Ben Grimm:
+  assigned_to:
+    - Fantastic Four
+  is_a: 'man-made'
+  member_of: Marvel-616
+
+## West Coast Avengers
+Clint Barton:
+  assigned_to:
+    - West Coast Avengers
+    - Avengers
+    - New Avengers
+  is_a: 'unpowered'
+  manages:
+    - Mockingbird
+    - Wonder Man
+  member_of: Marvel-616
+  aliases:
+    - Hawkeye
+Bobbi Morse:
+  assigned_to:
+    - West Coast Avengers
+    - Avengers
+    - New Avengers
+  is_a: 'man-made'
+  member_of: Marvel-616
+  aliases:
+    - Mockingbird
+Simon Williams:
+  assigned_to:
+    - West Coast Avengers
+    - Avengers
+  is_a: 'man-made'
+  member_of: Marvel-616
+  aliases:
+    - Wonder Man
+
+
+## X-Men
+Scott Summers:
+  assigned_to:
+    - X-Men
+    - Avengers
+    - New Avengers
+  manages:
+    - James Howlett
+    - Jean Grey-Summers
+  is_a: mutant
+  member_of: Marvel-616
+  aliases:
+    - Cyclops
+
+James Howlett:
+  assigned_to:
+    - X-Men
+    - Avengers
+    - New Avengers
+  is_a: mutant
+  member_of: Marvel-616
+  aliases:
+    - Wolverine
+Jean Grey-Summers:
+  assigned_to:
+    - X-Men
+  is_a: mutant
+  member_of: Marvel-616
+  aliases:
+    - Marvel Girl
+    - Phoenix
+    - Dark Phoenix
