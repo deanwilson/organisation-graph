@@ -47,6 +47,22 @@ explore the data.
 
 ![A Graph screenshot](/images/organisation-graph-data.png "Neo4J node browser with sample data")
 
+## Example Queries
+
+Show the services and which teams own them:
+
+    MATCH (s:Service)-[:`owns`]-(t:Team)
+    RETURN s.name as Service, t.name as Team
+
+![Table of service names and the teams that own them](/images/service-owners.png "Table of service names and the teams that own them")
+
+Show all the people the team that owns a service. This can be handy for finding
+people to help you in an incident.
+
+    MATCH (s:Service {name: 'Prison 42'})-[:`owns`]-(t:Team)
+    MATCH (t:Team)-[:`assigned to`]-(p:Person)
+    RETURN  s.name as Service, p.name as Owners
+
 
 ## Data and data formats
 
