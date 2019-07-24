@@ -55,20 +55,25 @@ def main(args):
     departments = set()
     teams = set()
 
-    for person in staff:
-        people.add(person)
+    for name in staff:
+        people.add(name)
 
-        roles.add(staff[person]['is_a'])
+        person = staff[name]
 
-        if 'manages' in staff[person]:
-            reports = staff[person]['manages']
-            [people.add(report) for report in reports]
+        roles.add(person['is_a'])
 
-        if 'member_of' in staff[person]:
-            departments.add(staff[person]['member_of'])
+        if 'manages' in person:
+            reports = person['manages']
 
-        if 'assigned_to' in staff[person]:
-            [teams.add(team) for team in staff[person]['assigned_to']]
+            for report in reports:
+                people.add(report)
+
+        if 'member_of' in person:
+            departments.add(person['member_of'])
+
+        if 'assigned_to' in person:
+            for team in person['assigned_to']:
+                teams.add(team)
 
     ## Add the base nodes
 
