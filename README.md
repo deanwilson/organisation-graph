@@ -49,12 +49,18 @@ explore the data.
 
 ## Example Queries
 
-Show the services and which teams own them:
+Show the services and which teams own them as a table:
 
     MATCH (s:Service)-[:`owns`]-(t:Team)
     RETURN s.name as Service, t.name as Team
 
 ![Table of service names and the teams that own them](/images/service-owners.png "Table of service names and the teams that own them")
+
+Or as a pretty graph
+
+    MATCH (s:Service {name: 'Prison 42'})-[:`owns`]-(t:Team)
+    MATCH (t:Team)-[:`assigned to`]-(p:Person)
+    RETURN  s.name as Service, p.name as Owners
 
 Show all the people the team that owns a service. This can be handy for finding
 people to help you in an incident.
