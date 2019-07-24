@@ -62,13 +62,16 @@ def main(args):
 
         if 'manages' in staff[person]:
             reports = staff[person]['manages']
-            [people.add(report) for report in reports]
+
+            for report in reports:
+                people.add(report)
 
         if 'member_of' in staff[person]:
             departments.add(staff[person]['member_of'])
 
         if 'assigned_to' in staff[person]:
-            [teams.add(team) for team in staff[person]['assigned_to']]
+            for team in staff[person]['assigned_to']:
+                teams.add(team)
 
     ## Add the base nodes
 
