@@ -18,6 +18,21 @@ under `$HOME/python-neo4j`. You can change this by editing the
     $ bin/run-neo-docker.sh
     0d45567uhdfdthae4731b8fc74sdff20g44740e32888ac5bd2d6438eba1d8a4d0f22e # Container ID
 
-
 You can confirm the container is running with `docker ps` and the container ID
 returned by our bash script above.
+
+Now we have the server running we will install the python environment we will
+use to load data into it. I'm using `python 3` and a `virtualenv` to ensure this
+experiment stays isolated.
+
+    # Create the python venv
+    $ python3 -mvenv venv
+
+    # Active it
+    $ source venv/bin/activate
+
+    # Install the required modules
+    $ pip install -r requirements.txt
+    Successfully installed ...snip... py2neo-4.3.0 pyyaml-5.1.1 ...snip...
+
+
