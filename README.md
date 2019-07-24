@@ -47,3 +47,53 @@ explore the data.
 
 ![A Graph screenshot](/images/organisation-graph-data.png "Neo4J node browser with sample data")
 
+
+## Data and data formats
+
+The example data I've included under [data](/data/) is the bare minimum required
+to have a graph you can click around and run some interesting queries over. If
+you want to add your own data the current formats are:
+
+### Data formats - Staff
+
+The individual staff entries should look like this:
+
+    FirstName LastName:
+      assigned_to:
+        - Team-1
+        - Team-2
+      is_a: 'Role title'
+      manages:
+      - FirstName LastName 1
+      - FirstName LastName 2
+      - FirstName LastName 3
+    member_of: 'Department Name'
+
+and a worked example:
+
+    Malcolm Reynolds:
+      assigned_to:
+        - Serenity
+      is_a: 'Captain'
+      manages:
+      - Kaylee
+      - Wash
+      - Jayne Cobb
+    member_of: Independents
+
+It's worth noting nearly every element is optional.
+
+### Data formats - Services
+
+    services:
+      - ServiceName:
+          owner: 'Team Name'
+
+An example with less abstract values:
+
+    services:
+      - Cerebro:
+          owner: 'X-Men'
+      - 'Danger Room':
+          owner: 'X-Men'
+
