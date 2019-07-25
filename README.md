@@ -58,9 +58,8 @@ Show the services and which teams own them as a table:
 
 Or as a pretty graph
 
-    MATCH (s:Service {name: 'Prison 42'})-[:`owns`]-(t:Team)
-    MATCH (t:Team)-[:`assigned to`]-(p:Person)
-    RETURN  s.name as Service, p.name as Owners
+    MATCH (s:Service)-[:`owns`]-(t:Team)
+    RETURN s as Service, t as Team
 
 Show all the people in the team that owns a service. This can be handy for finding
 people to help you in an incident.
@@ -68,7 +67,6 @@ people to help you in an incident.
     MATCH (s:Service {name: 'Prison 42'})-[:`owns`]-(t:Team)
     MATCH (t:Team)-[:`assigned to`]-(p:Person)
     RETURN  s.name as Service, p.name as Owners
-
 
 ## Data and data formats
 
