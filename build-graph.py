@@ -145,7 +145,6 @@ def main(args):
         graph.create(owner_rel)
 
         for tech in service['technology']:
-            print(f"Working with {tech}")
 
             # if we got the node, use it
             tech_node = matcher.match("Technology", name=tech).first()
@@ -157,7 +156,6 @@ def main(args):
 
             tech_rel = Relationship(service_node, "uses", tech_node)
             graph.create(tech_rel)
-                
 
 
 ## TODO
