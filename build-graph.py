@@ -122,10 +122,10 @@ def main(args):
             graph.create(team_rel)
 
         ## Tech leads
-        leads = staff[person].get('tech lead', [])
+        leads = staff[person].get('tech_lead', [])
         for team in leads:
             team_node = matcher.match("Team", name=team).first()
-            lead_rel = Relationship(person_node, "tech leads", team_node)
+            lead_rel = Relationship(person_node, "tech lead", team_node)
             graph.create(lead_rel)
 
 

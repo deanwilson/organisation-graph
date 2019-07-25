@@ -1,0 +1,178 @@
+
+## Director
+
+Susan Storm:
+  assigned_to:
+    - Senior Management
+    - Director
+  is_a: 'Director of Technology'
+  manages:
+    - Scott Summers
+    - Clint Barton
+  member_of: Technology
+
+## Department Heads
+
+Scott Summers:
+  assigned_to:
+    - Management
+  is_a: 'Head of Development'
+  manages:
+    - James Howlett
+    - James Proudstar
+    - Tabitha Smith
+    - Samuel Guthrie
+    - Wade Wilson
+    - Warren Worthington
+    - Jean Grey-Summers
+    - Emma Frost
+  member_of: Technology
+
+
+Phillip Coulson:
+  assigned_to:
+    - Management
+  is_a: 'Head of Infrastructure'
+  manages:
+    - Bobbi Morse
+    - Elena Rodriguez
+    - Jemma Simmons
+    - Lance Hunter
+    - Leo Fitz
+    - Melinda May
+  member_of: Technology
+
+## Infrastructure teams
+
+Melinda May:
+  assigned_to:
+    - Frontend
+  is_a: 'Senior SRE'
+  manages:
+   - Piper
+  member_of: Infrastructure
+  tech_lead:
+   - Frontend
+
+Leo Fitz:
+  assigned_to:
+    - Backend
+  is_a: 'Senior SRE'
+  member_of: Infrastructure
+
+Jemma Simmons:
+  assigned_to:
+    - Backend
+  is_a: 'Senior SRE'
+  manages:
+   - Deke Shaw
+  member_of: Infrastructure
+
+Elena Rodriguez:
+  assigned_to:
+    - Frontend
+  is_a: 'SRE'
+  member_of: Infrastructure
+
+Lance Hunter:
+  assigned_to:
+    - Frontend
+  is_a: 'SRE'
+  member_of: Infrastructure
+
+Bobbi Morse:
+  assigned_to:
+    - Frontend
+  is_a: 'SRE'
+  member_of: Infrastructure
+
+Deke Shaw:
+  assigned_to:
+    - Backend
+  is_a: 'Junior SRE'
+  member_of: Infrastructure
+  on_probation: True
+
+Piper:
+  assigned_to:
+    - Frontend
+  is_a: 'Junior SRE'
+  member_of: Infrastructure
+  on_probation: True
+
+## Development team
+
+James Howlett:
+  assigned_to:
+    - Frontend
+  is_a: 'Senior Developer'
+  member_of: Development
+  manages:
+   - Gaveedra Seven
+
+Warren Worthington:
+  assigned_to:
+    - Frontend
+  is_a: 'Senior Developer'
+  member_of: Development
+
+Samuel Guthrie:
+  assigned_to:
+    - Frontend
+  is_a: 'Senior Developer'
+  member_of: Development
+
+James Proudstar:
+  assigned_to:
+    - Frontend
+  is_a: 'Developer'
+  member_of: Development
+
+Wade Wilson:
+  assigned_to:
+    - Frontend
+  is_a: 'Developer'
+  member_of: Development
+
+Gaveedra Seven:
+  assigned_to:
+    - Frontend
+  is_a: 'Junior Developer'
+  member_of: Development
+  aliases:
+    - Shatterstar
+
+Tabitha Smith:
+  assigned_to:
+    - Frontend
+  is_a: 'Junior Developer'
+  member_of: Development
+  on_probation: True
+
+Jean Grey-Summers:
+  assigned_to:
+    - Backend
+  is_a: 'Senior Developer'
+  member_of: Development
+  tech_lead:
+    - Backend
+
+Emma Frost:
+  assigned_to:
+    - Backend
+  is_a: 'Senior Developer'
+  member_of: Development
+
+Celeste Cuckoo:
+  assigned_to:
+    - Backend
+  is_a: 'Junior Developer'
+  member_of: Development
+  on_probation: True
+
+Phoebe Cuckoo:
+  assigned_to:
+    - Backend
+  is_a: 'Junior Developer'
+  member_of: Development
+  on_probation: True
