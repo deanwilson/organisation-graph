@@ -148,6 +148,19 @@ def main(args):
         owner_rel = Relationship(team_node, "owns", service_node)
         graph.create(owner_rel)
 
+        for tech in service['technology']:
+
+            # if we got the node, use it
+            tech_node = matcher.match("Technology", name=tech).first()
+
+            if not tech_node:
+                # if we didn't get the node create it
+                tech_node = Node("Technology", name=tech)
+                graph.create(node)
+
+            tech_rel = Relationship(service_node, "uses", tech_node)
+            graph.create(tech_rel)
+
 
 ## TODO
 ### Abstract out the addition of the node and relationship and call it once in

@@ -1,9 +1,0 @@
-services:
-  "Order System":
-    owner: 'Backend'
-  "Inventory Tracker":
-    owner: 'Backend'
-  "Flash Sale Pusher":
-    owner: "Frontend"
-  "Webchat":
-    owner: "Frontend"
