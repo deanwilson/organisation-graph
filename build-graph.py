@@ -132,6 +132,11 @@ def main(args):
             lead_rel = Relationship(person_node, "tech lead", team_node)
             graph.create(lead_rel)
 
+        ## Departments / member_of
+        department = staff[person]['member_of']
+        department_node = matcher.match("Department", name=department).first()
+        department_rel = Relationship(person_node, "member of", department_node)
+        graph.create(department_rel)
 
 
     ## Services
