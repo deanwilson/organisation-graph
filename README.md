@@ -49,6 +49,10 @@ explore the data.
 
 ## Example Queries
 
+This repo includes a 
+[collection of sample queries](/docs/queries.md) that give examples of the syntax and shows some of
+the possibles. You can also see a few inline examples below
+
 Show the services and which teams own them as a table:
 
     MATCH (s:Service)-[:`owns`]-(t:Team)
