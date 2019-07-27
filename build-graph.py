@@ -48,6 +48,10 @@ def main(args):
     neo_password = _get_neo_pass()
     graph = Graph(host="localhost", password=neo_password)
 
+    # start from an empty state. Otherwise multiple runs make the data odd and
+    # inconsistent
+    graph.delete_all()
+
     ## Extract the data
     people = set()
     # make these comprehensions?
