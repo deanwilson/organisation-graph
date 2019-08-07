@@ -8,7 +8,7 @@ Susan Storm:
   is_a: 'Director of Technology'
   manages:
     - Scott Summers
-    - Clint Barton
+    - Phillip Coulson
   member_of: Technology
 
 ## Department Heads
@@ -161,6 +161,9 @@ Emma Frost:
   assigned_to:
     - Backend
   is_a: 'Senior Developer'
+  manages:
+   - Celeste Cuckoo
+   - Phoebe Cuckoo
   member_of: Development
 
 Celeste Cuckoo:
