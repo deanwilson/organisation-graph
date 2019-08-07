@@ -59,22 +59,11 @@ def main(args):
             ## print(f"  == Manager of {report} is {people[report].get_manager()}") # DEBUG
 
 
-    ## Build the template data
-    ### For each orgchart box, provide the name, manager, and tooltip to show.
-
-    org_data = []
-    for employee in people.values():
-        # special case to handle the top of the tree - which has manager == None
-        manager = employee.manager if employee.manager else ''
-
-        org_data.append([employee.name, manager, ''])
-
-
     jinja = Environment(loader=FileSystemLoader('templates'),
                         trim_blocks=True)
 
     template = jinja.get_template('org-chart.html.j2')
-    rendered_file = template.render(people=org_data)
+    rendered_file = template.render(people=people.values())
 
     with open(args.output, 'w') as rendered_chart:
         rendered_chart.write(rendered_file)
