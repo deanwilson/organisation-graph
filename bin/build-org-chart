@@ -4,7 +4,27 @@ import argparse
 
 from jinja2 import Environment, FileSystemLoader
 from pathlib import PurePath
+from sys import exit
 from yaml import load, SafeLoader
+
+class Employee:
+    def __init__(self, name, data):
+        self.name = name
+        self.data = data
+
+        self.role = data['is_a']
+        self.member_of = data['member_of']
+
+        self.manager = None
+
+        self.assigned_to = data.get('assigned_to', [])
+        self.manages = data.get('manages', [])
+
+    def set_manager(self, manager):
+        self.manager = manager
+
+    def get_manager(self):
+        return self.manager
 
 
 def _inflate_yaml(file_name):
@@ -22,26 +42,28 @@ def load_staff(staff_file):
 
     return staff
 
-
 def main(args):
     staff = load_staff(PurePath(args.data, args.staff))
-    people = []
+    people = {}
 
-
+    ## Construct the Employee objects and assign all their own data
     for name in staff:
-        person = staff[name]
+        person_details = staff[name]
 
-        if 'manages' in person:
-            reports = person['manages']
+        people[name] = Employee(name, person_details)
 
-            for report in reports:
-                people.append([report, name, ''])
+    ## Do a second pass and add the management relationship to the Employees
+    for employee in people.values():
+        for report in employee.manages:
+            people[report].set_manager(employee.name)
+            ## print(f"  == Manager of {report} is {people[report].get_manager()}") # DEBUG
+
 
     jinja = Environment(loader=FileSystemLoader('templates'),
                         trim_blocks=True)
 
     template = jinja.get_template('org-chart.html.j2')
-    rendered_file = template.render(people=people)
+    rendered_file = template.render(people=people.values())
 
     with open(args.output, 'w') as rendered_chart:
         rendered_chart.write(rendered_file)
