@@ -12,9 +12,30 @@
         data.addColumn('string', 'ToolTip');
 
         // For each orgchart box, provide the name, manager, and tooltip to show.
-        data.addRows(
-          [['Scott Summers', 'Susan Storm', ''], ['Phillip Coulson', 'Susan Storm', ''], ['James Howlett', 'Scott Summers', ''], ['James Proudstar', 'Scott Summers', ''], ['Tabitha Smith', 'Scott Summers', ''], ['Samuel Guthrie', 'Scott Summers', ''], ['Wade Wilson', 'Scott Summers', ''], ['Warren Worthington', 'Scott Summers', ''], ['Jean Grey-Summers', 'Scott Summers', ''], ['Emma Frost', 'Scott Summers', ''], ['Bobbi Morse', 'Phillip Coulson', ''], ['Elena Rodriguez', 'Phillip Coulson', ''], ['Jemma Simmons', 'Phillip Coulson', ''], ['Lance Hunter', 'Phillip Coulson', ''], ['Leo Fitz', 'Phillip Coulson', ''], ['Melinda May', 'Phillip Coulson', ''], ['Piper', 'Melinda May', ''], ['Deke Shaw', 'Jemma Simmons', ''], ['Gaveedra Seven', 'James Howlett', ''], ['Celeste Cuckoo', 'Emma Frost', ''], ['Phoebe Cuckoo', 'Emma Frost', '']]
-        );
+        data.addRows([
+  [{v:'Susan Storm', f:'Susan Storm<div style="color:red; font-style:italic">Director of Technology</div>'}, '', ''],
+  [{v:'Scott Summers', f:'Scott Summers<div style="color:red; font-style:italic">Head of Development</div>'}, 'Susan Storm', ''],
+  [{v:'Phillip Coulson', f:'Phillip Coulson<div style="color:red; font-style:italic">Head of Infrastructure</div>'}, 'Susan Storm', ''],
+  [{v:'Melinda May', f:'Melinda May<div style="color:red; font-style:italic">Senior SRE</div>'}, 'Phillip Coulson', ''],
+  [{v:'Leo Fitz', f:'Leo Fitz<div style="color:red; font-style:italic">Senior SRE</div>'}, 'Phillip Coulson', ''],
+  [{v:'Jemma Simmons', f:'Jemma Simmons<div style="color:red; font-style:italic">Senior SRE</div>'}, 'Phillip Coulson', ''],
+  [{v:'Elena Rodriguez', f:'Elena Rodriguez<div style="color:red; font-style:italic">SRE</div>'}, 'Phillip Coulson', ''],
+  [{v:'Lance Hunter', f:'Lance Hunter<div style="color:red; font-style:italic">SRE</div>'}, 'Phillip Coulson', ''],
+  [{v:'Bobbi Morse', f:'Bobbi Morse<div style="color:red; font-style:italic">SRE</div>'}, 'Phillip Coulson', ''],
+  [{v:'Deke Shaw', f:'Deke Shaw<div style="color:red; font-style:italic">Junior SRE</div>'}, 'Jemma Simmons', ''],
+  [{v:'Piper', f:'Piper<div style="color:red; font-style:italic">Junior SRE</div>'}, 'Melinda May', ''],
+  [{v:'James Howlett', f:'James Howlett<div style="color:red; font-style:italic">Senior Developer</div>'}, 'Scott Summers', ''],
+  [{v:'Warren Worthington', f:'Warren Worthington<div style="color:red; font-style:italic">Senior Developer</div>'}, 'Scott Summers', ''],
+  [{v:'Samuel Guthrie', f:'Samuel Guthrie<div style="color:red; font-style:italic">Senior Developer</div>'}, 'Scott Summers', ''],
+  [{v:'James Proudstar', f:'James Proudstar<div style="color:red; font-style:italic">Developer</div>'}, 'Scott Summers', ''],
+  [{v:'Wade Wilson', f:'Wade Wilson<div style="color:red; font-style:italic">Developer</div>'}, 'Scott Summers', ''],
+  [{v:'Gaveedra Seven', f:'Gaveedra Seven<div style="color:red; font-style:italic">Junior Developer</div>'}, 'James Howlett', ''],
+  [{v:'Tabitha Smith', f:'Tabitha Smith<div style="color:red; font-style:italic">Junior Developer</div>'}, 'Scott Summers', ''],
+  [{v:'Jean Grey-Summers', f:'Jean Grey-Summers<div style="color:red; font-style:italic">Senior Developer</div>'}, 'Scott Summers', ''],
+  [{v:'Emma Frost', f:'Emma Frost<div style="color:red; font-style:italic">Senior Developer</div>'}, 'Scott Summers', ''],
+  [{v:'Celeste Cuckoo', f:'Celeste Cuckoo<div style="color:red; font-style:italic">Junior Developer</div>'}, 'Emma Frost', ''],
+  [{v:'Phoebe Cuckoo', f:'Phoebe Cuckoo<div style="color:red; font-style:italic">Junior Developer</div>'}, 'Emma Frost', ''],
+        ]);
 
         // Create the chart.
         var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
