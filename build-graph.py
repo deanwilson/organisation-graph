@@ -99,13 +99,15 @@ def main(args):
 
     ## Build the relationships
     ### People
-    for person in staff:
+    for employee_name in staff:
+        employee = staff[employee_name]
+
         matcher = NodeMatcher(graph)
-        # person is a string, person_node is a graph object
-        person_node = matcher.match("Person", name=person).first()
+        # employee_name is a string, person_node is a graph object
+        person_node = matcher.match("Person", name=employee_name).first()
 
         ## Management relationships
-        manages = staff[person].get('manages', [])
+        manages = employee.get('manages', [])
         for report in manages:
             # inefficient to do this lookup everytime? Cache on node creation?
             report_node = matcher.match("Person", name=report).first()
@@ -113,27 +115,27 @@ def main(args):
             graph.create(manage_rel)
 
         ## Role relationships
-        role = staff[person]['is_a']
+        role = employee['is_a']
         role_node = matcher.match("Role", name=role).first()
         role_rel = Relationship(person_node, "is a", role_node)
         graph.create(role_rel)
 
         ## Team relationships
-        teams = staff[person].get('assigned_to', [])
+        teams = employee.get('assigned_to', [])
         for team in teams:
             team_node = matcher.match("Team", name=team).first()
             team_rel = Relationship(person_node, "assigned to", team_node)
             graph.create(team_rel)
 
         ## Tech leads
-        leads = staff[person].get('tech_lead', [])
+        leads = employee.get('tech_lead', [])
         for team in leads:
             team_node = matcher.match("Team", name=team).first()
             lead_rel = Relationship(person_node, "tech lead", team_node)
             graph.create(lead_rel)
 
         ## Departments / member_of
-        department = staff[person]['member_of']
+        department = employee['member_of']
         department_node = matcher.match("Department", name=department).first()
         department_rel = Relationship(person_node, "member of", department_node)
         graph.create(department_rel)
