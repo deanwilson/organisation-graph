@@ -91,7 +91,7 @@ The individual staff entries should look like this:
       - FirstName LastName 1
       - FirstName LastName 2
       - FirstName LastName 3
-    member_of: 'Department Name'
+      member_of: 'Department Name'
 
 and a worked example:
 
@@ -103,7 +103,7 @@ and a worked example:
       - Kaylee
       - Wash
       - Jayne Cobb
-    member_of: Independents
+      member_of: Independents
 
 It's worth noting nearly every element is optional.
 
