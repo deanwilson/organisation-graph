@@ -1,0 +1,19 @@
+jobs:
+  "Director of Technology":
+    salary: "120000"
+  "Head of Infrastructure":
+    salary: "85000-99000"
+  "Head of Development":
+    salary: "85000-99000"
+  "Senior Developer":
+    salary: "60000-74000"
+  "Developer":
+    salary: "50000-59000"
+  "Junior Developer":
+    salary: "35000-49000"
+  "Senior SRE":
+    salary: "65000-74000"
+  "SRE":
+    salary: "50000-64999"
+  "Junior SRE":
+    salary: "40000-49999"
