@@ -6,17 +6,18 @@ from jinja2 import Environment, FileSystemLoader
 from pathlib import PurePath
 from yaml import load, SafeLoader
 
+
 class Employee:
     def __init__(self, name, data):
         self.name = name
 
-        self.role = data['is_a']
-        self.member_of = data['member_of']
+        self.role = data["is_a"]
+        self.member_of = data["member_of"]
 
         self.manager = None
 
-        self.assigned_to = data.get('assigned_to', [])
-        self.manages = data.get('manages', [])
+        self.assigned_to = data.get("assigned_to", [])
+        self.manages = data.get("manages", [])
 
     def set_manager(self, manager):
         self.manager = manager
@@ -28,7 +29,7 @@ class Employee:
 def _inflate_yaml(file_name):
     yaml = None
 
-    with open(file_name, 'r') as yaml_file:
+    with open(file_name, "r") as yaml_file:
         yaml = yaml_file.read()
 
     inflated_yaml = load(yaml, Loader=SafeLoader)
@@ -40,45 +41,55 @@ def load_staff(staff_file):
 
     return staff
 
+
 def main(args):
     staff = load_staff(PurePath(args.data, args.staff))
     people = {}
 
-    ## Construct the Employee objects and assign all their own data
+    # Construct the Employee objects and assign all their own data
     for name in staff:
         person_details = staff[name]
 
         people[name] = Employee(name, person_details)
 
-    ## Do a second pass and add the management relationship to the Employees
+    # Do a second pass and add the management relationship to the Employees
     for employee in people.values():
         for report in employee.manages:
             people[report].set_manager(employee.name)
-            ## print(f"  == Manager of {report} is {people[report].get_manager()}") # DEBUG
+            # print(f"  == Manager of {report} is {people[report].get_manager()}")
 
+    jinja = Environment(loader=FileSystemLoader("templates"), trim_blocks=True)
 
-    jinja = Environment(loader=FileSystemLoader('templates'),
-                        trim_blocks=True)
-
-    template = jinja.get_template('org-chart.html.j2')
+    template = jinja.get_template("org-chart.html.j2")
     rendered_file = template.render(people=people.values())
 
-    with open(args.output, 'w') as rendered_chart:
+    with open(args.output, "w") as rendered_chart:
         rendered_chart.write(rendered_file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-    parser = argparse.ArgumentParser(description='Build the organisation chart')
+    parser = argparse.ArgumentParser(description="Build the organisation chart")
 
-    parser.add_argument('--data', type=str, default='data',
-                        help='A directory containing your yaml data files')
-    parser.add_argument('--output', type=str, default='output/org-chart.html',
-                        help='The file to write the HTML organisation chart to')
-    parser.add_argument('--staff', type=str, default='staff.yaml',
-                        help='A valid yaml file containing your staff information')
+    parser.add_argument(
+        "--data",
+        type=str,
+        default="data",
+        help="A directory containing your yaml data files",
+    )
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="output/org-chart.html",
+        help="The file to write the HTML organisation chart to",
+    )
+    parser.add_argument(
+        "--staff",
+        type=str,
+        default="staff.yaml",
+        help="A valid yaml file containing your staff information",
+    )
 
     args = parser.parse_args()
-
 
     main(args)
