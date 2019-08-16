@@ -7,13 +7,12 @@ class Jobs:
         self.path = data_path
         self.job_list = self._load_jobs()
 
-
     def _load_jobs(self):
         """ Load the supplied job YAML and convert it into Job objects """
         jobs = {}
         yaml = None
 
-        with open(self.path, 'r') as yaml_file:
+        with open(self.path, "r") as yaml_file:
             yaml = yaml_file.read()
 
         inflated_yaml = load(yaml, Loader=SafeLoader)
