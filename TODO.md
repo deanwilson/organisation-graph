@@ -5,15 +5,6 @@
   * Doc page of the contents of `bin/`
   * Extract all the data structure information to a data structures page
 
-## Linting and formatting
-
- * add flake
-  * run an example to see what it flags up.
-  * https://gitlab.com/pycqa/flake8
- * add black
-  * https://github.com/psf/black
-  * rerun flake to view the differences
-
 ## Add PyTest for the jobs and Job classes
 
  * write a few small tests to ensure the job creates correctly
@@ -56,6 +47,7 @@ Is this better for the querying aspect?
 
  * Add pydocstyle
  * https://pypi.org/project/flake8-docstrings/
+ * Finds lots of issues. Unsure about the value
 
 ## Add Pyblack config if needed
 
