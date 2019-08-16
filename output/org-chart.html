@@ -13,6 +13,7 @@
 
         // For each orgchart box, provide the name, manager, and tooltip to show.
         data.addRows([
+
   [{v:'Susan Storm', f:'Susan Storm<div style="color:red; font-style:italic">Director of Technology</div>'}, '', ''],
   [{v:'Scott Summers', f:'Scott Summers<div style="color:red; font-style:italic">Head of Development</div>'}, 'Susan Storm', ''],
   [{v:'Phillip Coulson', f:'Phillip Coulson<div style="color:red; font-style:italic">Head of Infrastructure</div>'}, 'Susan Storm', ''],
@@ -35,6 +36,7 @@
   [{v:'Emma Frost', f:'Emma Frost<div style="color:red; font-style:italic">Senior Developer</div>'}, 'Scott Summers', ''],
   [{v:'Celeste Cuckoo', f:'Celeste Cuckoo<div style="color:red; font-style:italic">Junior Developer</div>'}, 'Emma Frost', ''],
   [{v:'Phoebe Cuckoo', f:'Phoebe Cuckoo<div style="color:red; font-style:italic">Junior Developer</div>'}, 'Emma Frost', ''],
+
         ]);
 
         // Create the chart.
@@ -42,8 +44,8 @@
         // Draw the chart, setting the allowHtml option to true for the tooltips.
         chart.draw(data, {allowHtml:true});
       }
-   </script>
-    </head>
+    </script>
+  </head>
   <body>
     <div id="chart_div"></div>
   </body>
