@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
-from orggraph import *
+from orggraph.jobs import Jobs
 
 jobs = Jobs("data/jobs.yaml")
 
