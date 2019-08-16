@@ -14,11 +14,17 @@ class Job:
         # if the salary is given as a range extract the upper and lower bounds
         # otherwise use the same value for all 3
         if "-" in original_salary:
-            salary["lowest"], salary["highest"] = original_salary.split("-")
-            salary["median"] = median([int(salary["lowest"]), int(salary["highest"])])
+            low, high = original_salary.split("-")
+
+            salary["lowest"] = int(low)
+            salary["highest"] = int(high)
+
+            salary["median"] = median([salary["lowest"], salary["highest"]])
         else:
-            salary["lowest"] = original_salary
-            salary["highest"] = original_salary
-            salary["median"] = original_salary
+            original = int(original_salary)
+
+            salary["lowest"] = original
+            salary["highest"] = original
+            salary["median"] = original
 
         return salary
