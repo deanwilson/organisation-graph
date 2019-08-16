@@ -8,7 +8,7 @@ class Jobs:
         self.job_list = self._load_jobs()
 
     def _load_jobs(self):
-        """ Load the supplied job YAML and convert it into Job objects """
+        """Load the supplied job YAML and convert it into Job objects."""
         jobs = {}
         yaml = None
 

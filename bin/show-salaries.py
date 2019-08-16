@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Display the salaries of each role."""
 import os
 import sys
 

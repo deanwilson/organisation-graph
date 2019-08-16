@@ -30,7 +30,7 @@ def load_services(service_file):
 
 
 def _get_neo_pass():
-    """ Get the current Neo4J password or kill the process """
+    """Get the current Neo4J password or kill the process."""
     try:
         "ORG_GRAPH_NEO_PASSWORD" in os.environ
     except KeyError:
