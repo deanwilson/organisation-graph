@@ -4,13 +4,11 @@ import argparse
 
 from jinja2 import Environment, FileSystemLoader
 from pathlib import PurePath
-from sys import exit
 from yaml import load, SafeLoader
 
 class Employee:
     def __init__(self, name, data):
         self.name = name
-        self.data = data
 
         self.role = data['is_a']
         self.member_of = data['member_of']
