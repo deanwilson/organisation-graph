@@ -13,7 +13,7 @@
 ## Extract the Person class
 
  * Convert the person hash to a collection of objects #class Person: def __init__(self):
- * Extract the people class from the build org chart script
+ * ~~Extract the people class from the build org chart script~~
  * Add a few basic checks for it
  * Add a Person class collection wrapper
  * Add a few basic checks for it
