@@ -5,11 +5,6 @@
   * Doc page of the contents of `bin/`
   * Extract all the data structure information to a data structures page
 
-## Salary Script
-
- * Move the script to ./bin
- * fix the imports and the script to use it
-
 ## Linting and formatting
 
  * add flake
