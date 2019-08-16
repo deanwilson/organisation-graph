@@ -49,14 +49,6 @@ Is this better for the querying aspect?
  * https://pypi.org/project/flake8-docstrings/
  * Finds lots of issues. Unsure about the value
 
-## Add Pyblack config if needed
-
-```
-pyproject.toml
-[tool.black]
-line-length = 88
-```
-
 ## Unsorted
 
  * Leavers? - Which services will be impacted? Sample query
