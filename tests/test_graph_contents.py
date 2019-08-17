@@ -78,3 +78,13 @@ def test_role_nodes(graph_connect):
 
     assert role.values()[0]["name"] == "Head of Development"
 
+
+def test_department_nodes(graph_connect):
+    """Ensure the graph contains Department nodes."""
+    with graph_connect.session() as session:
+        result = session.run("MATCH (Department { name: 'Technology' }) return (Department)")
+
+    department = result.single()
+
+    assert department.values()[0]["name"] == "Technology"
+

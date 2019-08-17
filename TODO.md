@@ -25,7 +25,7 @@
  * ~~Ensure Person relationships get created~~
 
  * ~~Ensure Role nodes get created~~
- * Ensure Department nodes get created
+ * ~~Ensure Department nodes get created~~
  * Ensure Technology nodes get created
 
  * Ensure Team nodes get created
