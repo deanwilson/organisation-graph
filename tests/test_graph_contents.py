@@ -97,3 +97,30 @@ def test_technology_nodes(graph_connect):
     technology = result.single()
 
     assert technology.values()[0]["name"] == "PostgreSQL"
+
+
+def test_team_nodes(graph_connect):
+    """Ensure the graph contains Team nodes."""
+    with graph_connect.session() as session:
+        result = session.run("MATCH (Team { name: 'Backend' }) return (Team)")
+
+    team = result.single()
+
+    assert team.values()[0]["name"] == "Backend"
+
+
+def test_team_relationships(graph_connect):
+    """Ensure the expected team node relations exist."""
+    # Ensure a May Employee node exists
+    with graph_connect.session() as session:
+        result = session.run(
+            "MATCH (:Team { name: 'Backend' })-[r]->(rela)"
+            "RETURN type(r) as relation_name, (rela.name) as remote_node_value"
+        )
+
+    relations = result.data()
+
+    owned_services = [r['remote_node_value'] for r in relations if r['relation_name'] == "owns"]
+
+    # the team should own a service
+    assert "Order System" in owned_services

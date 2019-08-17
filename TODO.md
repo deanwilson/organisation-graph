@@ -28,8 +28,8 @@
  * ~~Ensure Department nodes get created~~
  * ~~Ensure Technology nodes get created~~
 
- * Ensure Team nodes get created
- * Ensure Team relationships (owns) get created
+ * ~~Ensure Team nodes get created~~
+ * ~~Ensure Team relationships (owns) get created~~
 
  * Ensure Service nodes get created
  * Ensure Service relationships (uses) get created
