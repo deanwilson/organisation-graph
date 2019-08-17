@@ -19,23 +19,6 @@
  * Add a Person class collection wrapper
  * Add a few basic checks for it
 
-## Add some basic graph structure tests
-
- * ~~Ensure Person nodes get created~~
- * ~~Ensure Person relationships get created~~
-
- * ~~Ensure Role nodes get created~~
- * ~~Ensure Department nodes get created~~
- * ~~Ensure Technology nodes get created~~
-
- * ~~Ensure Team nodes get created~~
- * ~~Ensure Team relationships (owns) get created~~
-
- * ~~Ensure Service nodes get created~~
- * ~~Ensure Service relationships (uses) get created~~
-
- * Make a pytest plugin for this?
-
 ## Migrate build graph script to objects
 
  * Add node caching to the objects
