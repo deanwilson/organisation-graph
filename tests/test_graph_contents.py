@@ -67,3 +67,14 @@ def test_person_relationships(graph_connect):
     # and she is a member of
     assert "member of" in node_relations, "Node has a 'member of' relationship"
     assert node_relations["member of"] == "Infrastructure"
+
+
+def test_role_nodes(graph_connect):
+    """Ensure the graph contains Role nodes."""
+    with graph_connect.session() as session:
+        result = session.run("MATCH (Role { name: 'Head of Development' }) return (Role)")
+
+    role = result.single()
+
+    assert role.values()[0]["name"] == "Head of Development"
+
