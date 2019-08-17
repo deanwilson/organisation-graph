@@ -88,3 +88,12 @@ def test_department_nodes(graph_connect):
 
     assert department.values()[0]["name"] == "Technology"
 
+
+def test_technology_nodes(graph_connect):
+    """Ensure the graph contains Technology nodes."""
+    with graph_connect.session() as session:
+        result = session.run("MATCH (Technology { name: 'PostgreSQL' }) return (Technology)")
+
+    technology = result.single()
+
+    assert technology.values()[0]["name"] == "PostgreSQL"
