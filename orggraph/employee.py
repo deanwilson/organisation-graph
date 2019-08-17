@@ -4,6 +4,7 @@ class Employee:
 
         self.role = data["is_a"]
         self.member_of = data["member_of"]
+        self.aliases = data.get("aliases", [])
 
         self.manager = None
 

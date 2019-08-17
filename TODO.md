@@ -7,14 +7,15 @@
 
 ## Add PyTest for the jobs and Job classes
 
- * write a few small tests to ensure the job creates correctly
+ * ~~write a few small tests to ensure the job creates correctly~~
  * ensure a YAML file creates multiple jobs (fixtures directory?)
 
 ## Extract the Person class
 
  * Convert the person hash to a collection of objects #class Person: def __init__(self):
  * ~~Extract the people class from the build org chart script~~
- * Add a few basic checks for it
+ * ~~Add a few basic checks for it~~
+
  * Add a Person class collection wrapper
  * Add a few basic checks for it
 
