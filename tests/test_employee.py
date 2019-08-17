@@ -1,4 +1,4 @@
-"""Test cases for the Empployee object."""
+"""Test cases for the Employee object."""
 import os
 import sys
 

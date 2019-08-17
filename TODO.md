@@ -19,12 +19,6 @@
  * Add a Person class collection wrapper
  * Add a few basic checks for it
 
-## Add some basic graph structure tests
-
- * Ensure some of the sample data has nodes
- * Ensure some of the relationships are present
- * Make a pytest plugin for this?
-
 ## Migrate build graph script to objects
 
  * Add node caching to the objects
