@@ -28,3 +28,42 @@ def test_person_nodes(graph_connect):
 
     assert person.values()[0]["name"] == "Leo Fitz"
     # print(f"Node id is {person.values()[0].id}")
+
+
+def test_person_relationships(graph_connect):
+    """Ensure the expected node relations exist."""
+    # Ensure a May Employee node exists
+    with graph_connect.session() as session:
+        result = session.run(
+            "MATCH (:Person { name: 'Melinda May' })-[r]->(rela)"
+            "RETURN type(r) as relation_name, (rela.name) as remote_node_value"
+        )
+
+    relations = result.data()
+
+    # the results from data are a list of dicts. This turns it into a single dict
+    # TODO: this is naive code and assumes one of each relationship type. Which isn't
+    # true of some, such as "manages"
+    node_relations = {}
+    for relation in relations:
+        node_relations[relation["relation_name"]] = relation["remote_node_value"]
+
+    # and she is a tech lead
+    assert "tech lead" in node_relations, "Node has a 'tech lead' relationship"
+    assert node_relations["tech lead"] == "Frontend"
+
+    # and she manages
+    assert "manages" in node_relations, "Node has a 'manages' relationship"
+    assert node_relations["manages"] == "Piper"
+
+    # and she is a
+    assert "is a" in node_relations, "Node has a 'is a' relationship"
+    assert node_relations["is a"] == "Senior SRE"
+
+    # and she is assigned
+    assert "assigned to" in node_relations, "Node has a 'assigned to' relationship"
+    assert node_relations["assigned to"] == "Frontend"
+
+    # and she is a member of
+    assert "member of" in node_relations, "Node has a 'member of' relationship"
+    assert node_relations["member of"] == "Infrastructure"
