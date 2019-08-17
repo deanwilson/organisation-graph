@@ -32,7 +32,6 @@ def test_person_nodes(graph_connect):
 
 def test_person_relationships(graph_connect):
     """Ensure the expected node relations exist."""
-    # Ensure a May Employee node exists
     with graph_connect.session() as session:
         result = session.run(
             "MATCH (:Person { name: 'Melinda May' })-[r]->(rela)"
@@ -111,7 +110,6 @@ def test_team_nodes(graph_connect):
 
 def test_team_relationships(graph_connect):
     """Ensure the expected team node relations exist."""
-    # Ensure a May Employee node exists
     with graph_connect.session() as session:
         result = session.run(
             "MATCH (:Team { name: 'Backend' })-[r]->(rela)"
@@ -124,3 +122,29 @@ def test_team_relationships(graph_connect):
 
     # the team should own a service
     assert "Order System" in owned_services
+
+
+def test_service_nodes(graph_connect):
+    """Ensure the graph contains Service nodes."""
+    with graph_connect.session() as session:
+        result = session.run("MATCH (Service { name: 'Order System' }) return (Service)")
+
+    service = result.single()
+
+    assert service.values()[0]["name"] == "Order System"
+
+
+def test_service_relationships(graph_connect):
+    """Ensure the expected service node relations exist."""
+    with graph_connect.session() as session:
+        result = session.run(
+            "MATCH (:Service { name: 'Order System' })-[r]->(rela)"
+            "RETURN type(r) as relation_name, (rela.name) as remote_node_value"
+        )
+
+    relations = result.data()
+
+    tech_used = [r['remote_node_value'] for r in relations if r['relation_name'] == "uses"]
+
+    # the service uses technologies
+    assert "PostgreSQL" in tech_used

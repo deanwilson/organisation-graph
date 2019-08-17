@@ -31,8 +31,8 @@
  * ~~Ensure Team nodes get created~~
  * ~~Ensure Team relationships (owns) get created~~
 
- * Ensure Service nodes get created
- * Ensure Service relationships (uses) get created
+ * ~~Ensure Service nodes get created~~
+ * ~~Ensure Service relationships (uses) get created~~
 
  * Make a pytest plugin for this?
 
