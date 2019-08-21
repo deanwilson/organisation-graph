@@ -156,7 +156,7 @@ def main(args):
         owner_rel = Relationship(team_node, "owns", service_node)
         graph.create(owner_rel)
 
-        for tech in service["technology"]:
+        for tech in service["technologies"]:
 
             # if we got the node, use it
             tech_node = matcher.match("Technology", name=tech).first()
