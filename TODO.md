@@ -5,19 +5,9 @@
   * Doc page of the contents of `bin/`
   * Extract all the data structure information to a data structures page
 
-## Add PyTest for the jobs and Job classes
-
- * ~~write a few small tests to ensure the job creates correctly~~
- * ensure a YAML file creates multiple jobs (fixtures directory?)
-
 ## Extract the Person class
 
- * Convert the person hash to a collection of objects #class Person: def __init__(self):
- * ~~Extract the people class from the build org chart script~~
- * ~~Add a few basic checks for it~~
-
- * Add a Person class collection wrapper
- * Add a few basic checks for it
+ * Convert the person hash to a collection of objects #class Person: def __init__(self): in the graph building script
 
 ## Migrate build graph script to objects
 
@@ -53,3 +43,5 @@ Is this better for the querying aspect?
  * Tie services to skills matrix and have staff complete a matrix
  * Add test matchers for relationships
   - person node 'Dean' is 'relationship name' to person node 'Jo'
+ * Document running the tests
+  * pytest -v --ignore=tests/test_graph_contents.py
