@@ -12,7 +12,7 @@ def file_contents(filename):
     with open(filename, "r") as file:
         contents = file.read()
 
-    return(contents)
+    return contents
 
 
 def yaml_loader(yaml_data):
@@ -24,4 +24,4 @@ def yaml_loader(yaml_data):
         print(f"Invalid YAML: [{error}]", file=sys.stderr)
         sys.exit(1)
 
-    return(inflated_yaml)
+    return inflated_yaml

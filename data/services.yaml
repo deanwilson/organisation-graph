@@ -1,26 +1,26 @@
 services:
   "Order System":
     owner: 'Backend'
-    technology:
+    technologies:
       - Linux
       - PostgreSQL
       - Java
   "Inventory Tracker":
     owner: 'Backend'
-    technology:
+    technologies:
       - Linux
       - PostgreSQL
       - Python
   "Flash Sale Pusher":
     owner: "Frontend"
-    technology:
+    technologies:
       - Linux
       - PostgreSQL
       - JavaScript
       - Python
   "Webchat":
     owner: "Frontend"
-    technology:
+    technologies:
       - Linux
       - PostgreSQL
       - JavaScript
