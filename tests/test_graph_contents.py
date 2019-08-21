@@ -71,7 +71,9 @@ def test_person_relationships(graph_connect):
 def test_role_nodes(graph_connect):
     """Ensure the graph contains Role nodes."""
     with graph_connect.session() as session:
-        result = session.run("MATCH (Role { name: 'Head of Development' }) return (Role)")
+        result = session.run(
+            "MATCH (Role { name: 'Head of Development' }) return (Role)"
+        )
 
     role = result.single()
 
@@ -81,7 +83,9 @@ def test_role_nodes(graph_connect):
 def test_department_nodes(graph_connect):
     """Ensure the graph contains Department nodes."""
     with graph_connect.session() as session:
-        result = session.run("MATCH (Department { name: 'Technology' }) return (Department)")
+        result = session.run(
+            "MATCH (Department { name: 'Technology' }) return (Department)"
+        )
 
     department = result.single()
 
@@ -91,7 +95,9 @@ def test_department_nodes(graph_connect):
 def test_technology_nodes(graph_connect):
     """Ensure the graph contains Technology nodes."""
     with graph_connect.session() as session:
-        result = session.run("MATCH (Technology { name: 'PostgreSQL' }) return (Technology)")
+        result = session.run(
+            "MATCH (Technology { name: 'PostgreSQL' }) return (Technology)"
+        )
 
     technology = result.single()
 
@@ -118,7 +124,9 @@ def test_team_relationships(graph_connect):
 
     relations = result.data()
 
-    owned_services = [r['remote_node_value'] for r in relations if r['relation_name'] == "owns"]
+    owned_services = [
+        r["remote_node_value"] for r in relations if r["relation_name"] == "owns"
+    ]
 
     # the team should own a service
     assert "Order System" in owned_services
@@ -127,7 +135,9 @@ def test_team_relationships(graph_connect):
 def test_service_nodes(graph_connect):
     """Ensure the graph contains Service nodes."""
     with graph_connect.session() as session:
-        result = session.run("MATCH (Service { name: 'Order System' }) return (Service)")
+        result = session.run(
+            "MATCH (Service { name: 'Order System' }) return (Service)"
+        )
 
     service = result.single()
 
@@ -144,7 +154,9 @@ def test_service_relationships(graph_connect):
 
     relations = result.data()
 
-    tech_used = [r['remote_node_value'] for r in relations if r['relation_name'] == "uses"]
+    tech_used = [
+        r["remote_node_value"] for r in relations if r["relation_name"] == "uses"
+    ]
 
     # the service uses technologies
     assert "PostgreSQL" in tech_used

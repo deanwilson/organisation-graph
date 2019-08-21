@@ -11,6 +11,8 @@ class Employee:
         self.assigned_to = data.get("assigned_to", [])
         self.manages = data.get("manages", [])
 
+        self.node_id = None
+
     def set_manager(self, manager):
         self.manager = manager
 

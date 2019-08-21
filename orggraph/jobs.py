@@ -1,5 +1,5 @@
-from yaml import load, SafeLoader
 from orggraph.job import Job
+from orggraph.dataloader import yaml_loader, file_contents
 
 
 class Jobs:
@@ -10,12 +10,9 @@ class Jobs:
     def _load_jobs(self):
         """Load the supplied job YAML and convert it into Job objects."""
         jobs = {}
-        yaml = None
 
-        with open(self.path, "r") as yaml_file:
-            yaml = yaml_file.read()
+        inflated_yaml = yaml_loader(file_contents(self.path))
 
-        inflated_yaml = load(yaml, Loader=SafeLoader)
         jobs = inflated_yaml["jobs"]
 
         for entry in jobs:
