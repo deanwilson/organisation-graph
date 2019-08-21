@@ -4,6 +4,7 @@ from yaml.scanner import ScannerError
 
 import sys
 
+
 def file_contents(filename):
     """File reading function with Exception handling"""
     contents = None
@@ -16,7 +17,6 @@ def file_contents(filename):
 
 def yaml_loader(yaml_data):
     """Inflate the provided YAML and return it as a Python structure."""
-    yaml = None
 
     try:
         inflated_yaml = load(yaml_data, Loader=SafeLoader)
