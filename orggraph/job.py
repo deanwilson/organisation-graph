@@ -7,6 +7,8 @@ class Job:
         self.salary_range = job_data["salary"]
         self.salary = self._extract_salary(job_data["salary"])
 
+        self.node_id = None
+
     def _extract_salary(self, original_salary):
         salary = {}
         salary["range"] = original_salary
