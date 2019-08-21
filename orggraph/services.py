@@ -7,7 +7,6 @@ class Services:
         self.path = data_path
         self.service_list = self._load()
 
-
     def _load(self):
         """Load the supplied service YAML and convert it into Service objects."""
         services = {}
@@ -18,7 +17,6 @@ class Services:
             services[service] = Service(service, services[service])
 
         return services
-
 
     def services(self):
         return list(self.service_list.values())

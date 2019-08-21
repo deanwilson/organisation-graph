@@ -10,14 +10,7 @@ from orggraph.service import Service  # noqa: E402
 def test_creation():
     """Test basic service object creation."""
     name = "OrderDB"
-    details = {
-        "owner": "The brave few",
-        "technologies": [
-            "Linux",
-            "Java",
-            "MySQL",
-        ]
-    }
+    details = {"owner": "The brave few", "technologies": ["Linux", "Java", "MySQL"]}
 
     service = Service(name, details)
 
