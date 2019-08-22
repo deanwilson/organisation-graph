@@ -45,3 +45,13 @@ Is this better for the querying aspect?
   - person node 'Dean' is 'relationship name' to person node 'Jo'
  * Document running the tests
   * pytest -v --ignore=tests/test_graph_contents.py
+
+
+### Temporal relationships
+
+The current graph is completely point in time and allows no history or versioning
+outside of keeping the configs inside git
+
+ * Add multiple relationships
+ * one with current
+ * one per time period
