@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+"""Load GitHub metadata into the OrgGraph."""
+import argparse
+import sys
+import os
+
+from neo4j import GraphDatabase
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../"))
+
+from orggraph.dataloader import yaml_loader, file_contents  # noqa: E402
+
+
+def _get_neo_pass():
+    """Get the current Neo4J password or kill the process."""
+    try:
+        "ORG_GRAPH_NEO_PASSWORD" in os.environ
+    except KeyError:
+        print("Please set the environment variable ORG_GRAPH_NEO_PASSWORD")
+        exit(1)
+
+    return os.environ["ORG_GRAPH_NEO_PASSWORD"]
+
+
+def clean_existing(driver):
+    """Remove all the nodes and relationships created by this enricher."""
+    # cleanup before we begin to ensure we're in a known state
+
+    # TODO: make this a loop once relationship deletions are tested
+    with driver.session() as session:
+        session.run("MATCH (n:GitHubRepo) DETACH DELETE n")
+
+    with driver.session() as session:
+        session.run("MATCH (n:GitHubTeam) DETACH DELETE n")
+
+    with driver.session() as session:
+        session.run("MATCH (n:GitHubUser) DETACH DELETE n")
+
+
+def create_repo_node(tx, name, organization):
+    """Create a GitHubRepo node."""
+    tx.run(
+        "CREATE (a:GitHubRepo { name:$name, organization: $organization }) "
+        "RETURN id(a)",
+        name=name,
+        organization=organization,
+    )
+
+
+def create_user_node(tx, name, organization):
+    """Create a GitHubUser node."""
+    tx.run(
+        "CREATE (a:GitHubUser { name:$name, organization: $organization }) "
+        "RETURN id(a)",
+        name=name,
+        organization=organization,
+    )
+
+
+def create_team_node(tx, name, organization):
+    """Create a GitHubTeam node."""
+    tx.run(
+        "CREATE (a:GitHubTeam { name:$name, organization: $organization }) "
+        "RETURN id(a)",
+        name=name,
+        organization=organization,
+    )
+
+
+def relate_user_team(tx, user, team, organization):
+    """Create a relationship between a user and a team."""
+    # TODO: Limit this to within the org as the usernames and team names can be in 1+
+    tx.run(
+        "MATCH (a:GitHubUser),(b:GitHubTeam)"
+        f"WHERE a.name = '{user}' AND b.name = '{team}'"
+        "CREATE (a)-[r:in_team]->(b)"
+        "RETURN type(r)",
+    )
+
+
+def main(args):
+    """Add the GitHub metadata."""
+    github_data = yaml_loader(file_contents(args.datafile))
+
+    driver = GraphDatabase.driver(
+        "bolt://localhost:7687", auth=("neo4j", _get_neo_pass())
+    )
+
+    clean_existing(driver)
+
+    for org in github_data["repos"]:
+        for repo in github_data["repos"][org]:
+            with driver.session() as session:
+                session.write_transaction(create_repo_node, repo, org)
+
+    for org in github_data["teams"]:
+        github_users = set()
+
+        for team in github_data["teams"][org]:
+            with driver.session() as session:
+                session.write_transaction(create_team_node, team, org)
+
+            for user in github_data["teams"][org][team]["members"]:
+                # if we've not seen the user add it
+                if user not in github_users:
+                    github_users.add(user)
+
+                    with driver.session() as session:
+                        session.write_transaction(create_user_node, user, org)
+
+                # users can be in more than one team so add a relationship everytime
+                with driver.session() as session:
+                    session.write_transaction(relate_user_team, user, team, org)
+
+
+    driver.close()
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(
+        description="Load GitHub metadata into the OrgGraph"
+    )
+
+    parser.add_argument(
+        "--datafile",
+        type=str,
+        default="enriched-data/github-output.yaml",
+        help="File containing the GitHub metadata. Stored as YAML",
+    )
+
+    args = parser.parse_args()
+
+    main(args)
