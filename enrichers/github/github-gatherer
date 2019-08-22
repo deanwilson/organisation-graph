@@ -2,6 +2,7 @@
 """Query GitHub for metadata and generate YAML from the results."""
 import argparse
 import os
+import time
 
 from github import Github
 from sys import exit
@@ -19,10 +20,17 @@ def main(args):
     g = Github(os.environ["GITHUB_AUTH_TOKEN"])
 
     org_repos = {}
+    count = 0
     for org in args.org:
         org_repos[org] = []
 
         for repo in g.search_repositories(query=f"user:{org}"):
+            count += 1
+
+            if args.size:
+                if count % args.size == 0:
+                    time.sleep(args.delay)
+
             org_repos[org].append(repo.name)
 
     org_teams = {}
@@ -53,6 +61,22 @@ if __name__ == "__main__":
         type=str,
         default="enriched-data/github-output.yaml",
         help="The file to write output to",
+    )
+
+    parser.add_argument(
+        "--size",
+        "--batch-size",
+        type=int,
+        default=None,
+        help="Split requests into groups of this size to avoid API limits",
+    )
+
+    parser.add_argument(
+        "--delay",
+        "--batch-delay",
+        type=int,
+        default=3,
+        help="Number of seconds to sleep between batches",
     )
 
     parser.add_argument(
