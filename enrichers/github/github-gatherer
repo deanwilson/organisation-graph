@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+"""Query GitHub for metadata and generate YAML from the results."""
+import argparse
+import os
+
+from github import Github
+from sys import exit
+from yaml import dump, Dumper
+
+
+def main(args):
+    """Call GitHub and create a datastructure for YAMLing."""
+    try:
+        "GITHUB_AUTH_TOKEN" in os.environ
+    except KeyError:
+        print("Please set the environment variable GITHUB_AUTH_TOKEN")
+        exit(1)
+
+    g = Github(os.environ["GITHUB_AUTH_TOKEN"])
+
+    org_repos = {}
+    for org in args.org:
+        org_repos[org] = []
+
+        for repo in g.search_repositories(query=f"user:{org}"):
+            org_repos[org].append(repo.name)
+
+    org_teams = {}
+    for organisation in args.org:
+        org = g.get_organization(organisation)
+        org_teams[organisation] = {}
+
+        for team in org.get_teams():
+            org_teams[organisation][team.name] = {}
+            org_teams[organisation][team.name]["members"] = []
+            for user in team.get_members():
+                org_teams[organisation][team.name]["members"].append(user.login)
+
+    output = {}
+    output["repos"] = org_repos
+    output["teams"] = org_teams
+
+    with open(args.output, "w") as file:
+        file.write(dump(output, Dumper=Dumper))
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description="Query GitHub for metadata")
+
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="enriched-data/github-output.yaml",
+        help="The file to write output to",
+    )
+
+    parser.add_argument(
+        "-o",
+        "--org",
+        nargs="+",
+        help="One or more GitHub organisation names",
+        required=True,
+    )
+
+    args = parser.parse_args()
+
+    main(args)
