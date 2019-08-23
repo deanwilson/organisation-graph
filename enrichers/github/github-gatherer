@@ -20,9 +20,11 @@ def main(args):
     g = Github(os.environ["GITHUB_AUTH_TOKEN"])
 
     org_repos = {}
+    permissions_mapping = {}
     count = 0
     for org in args.org:
         org_repos[org] = []
+        permissions_mapping[org] = {}
 
         for repo in g.search_repositories(query=f"user:{org}"):
             count += 1
@@ -32,6 +34,10 @@ def main(args):
                     time.sleep(args.delay)
 
             org_repos[org].append(repo.name)
+            permissions_mapping[org][repo.name] = {}
+
+            for team in repo.get_teams():
+                permissions_mapping[org][repo.name][team.name] = team.permission
 
     org_teams = {}
     for organisation in args.org:
@@ -47,6 +53,7 @@ def main(args):
     output = {}
     output["repos"] = org_repos
     output["teams"] = org_teams
+    output["permissions"] = permissions_mapping
 
     with open(args.output, "w") as file:
         file.write(dump(output, Dumper=Dumper))

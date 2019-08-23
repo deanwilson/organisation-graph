@@ -74,7 +74,18 @@ def relate_user_team(tx, user, team, organization):
         "MATCH (a:GitHubUser),(b:GitHubTeam)"
         f"WHERE a.name = '{user}' AND b.name = '{team}'"
         "CREATE (a)-[r:in_team]->(b)"
-        "RETURN type(r)",
+        "RETURN type(r)"
+    )
+
+
+def relate_team_repo(tx, team, repo, permission, organization):
+    """Create a relationship between a Team and a Repo."""
+    # TODO: Limit this to within the org as the usernames and team names can be in 1+
+    tx.run(
+        "MATCH (a:GitHubTeam),(b:GitHubRepo)"
+        f"WHERE a.name = '{team}' AND b.name = '{repo}'"
+        "CREATE (a)-[r:repo_permission { name: '" + permission + "' }]->(b)"
+        "RETURN type(r)"
     )
 
 
@@ -112,6 +123,15 @@ def main(args):
                 with driver.session() as session:
                     session.write_transaction(relate_user_team, user, team, org)
 
+    for org in github_data["permissions"]:
+        for repo in github_data["permissions"][org]:
+            for team in github_data["permissions"][org][repo]:
+                permission = github_data["permissions"][org][repo][team]
+
+                with driver.session() as session:
+                    session.write_transaction(
+                        relate_team_repo, team, repo, permission, org
+                    )
 
     driver.close()
 
