@@ -129,6 +129,12 @@ will find everyone on the owning team.
     MATCH (t:Team)-[:`assigned to`]-(p:Person)
     RETURN s.name as Service, p.name as Owners
 
+### Show the running cost of a team
+
+    MATCH (p:Person)-[:`assigned to`]-(t:Team {name:'Frontend'})
+    OPTIONAL MATCH (p)-[:`is a`]-(r:Role)
+    RETURN SUM(r.salary) as `Annual team running cost`
+
 ## External Links
 
  * [Cypher Match clause](https://neo4j.com/docs/cypher-manual/current/clauses/match/)

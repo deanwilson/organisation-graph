@@ -1,11 +1,16 @@
+#!/usr/bin/env python3
 import argparse
 import os
 
 from pathlib import PurePath
 from py2neo import Graph, NodeMatcher
 from py2neo.data import Node, Relationship
-from sys import exit
+from sys import exit, path
 from yaml import load, SafeLoader
+
+path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+from orggraph.jobs import Jobs  # noqa: E402
 
 
 def _inflate_yaml(file_name):
@@ -55,7 +60,6 @@ def main(args):
     # Extract the data
     people = set()
     # TODO make these comprehensions?
-    roles = set()
     departments = set()
     teams = set()
 
@@ -63,8 +67,6 @@ def main(args):
         people.add(name)
 
         person = staff[name]
-
-        roles.add(person["is_a"])
 
         if "manages" in person:
             reports = person["manages"]
@@ -89,8 +91,11 @@ def main(args):
         node = Node("Team", name=team)
         graph.create(node)
 
-    for role in roles:
-        node = Node("Role", name=role)
+    # Move to using the Job object
+    jobs = Jobs("data/jobs.yaml")
+    for job in jobs.jobs():
+        node = Node("Role", name=job.title)
+        node["salary"] = job.salary["median"]
         graph.create(node)
 
     for department in departments:
@@ -184,6 +189,12 @@ if __name__ == "__main__":
         type=str,
         default="data",
         help="A directory containing your yaml data files",
+    )
+    parser.add_argument(
+        "--jobs",
+        type=str,
+        default="jobs.yaml",
+        help="A valid yaml file containing your job information",
     )
     parser.add_argument(
         "--services",
