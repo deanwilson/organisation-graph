@@ -3,7 +3,6 @@
 ## Documentation
 
   * Doc page of the contents of `bin/`
-  * Extract all the data structure information to a data structures page
 
 ## Extract the Person class
 

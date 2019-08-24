@@ -1,12 +1,12 @@
 services:
   "Order System":
-    owner: 'Backend'
+    owner: "Backend"
     technologies:
       - Linux
       - PostgreSQL
       - Java
   "Inventory Tracker":
-    owner: 'Backend'
+    owner: "Backend"
     technologies:
       - Linux
       - PostgreSQL
