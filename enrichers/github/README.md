@@ -37,10 +37,42 @@ Once this is complete you should be able to see the data inside Neo4J
 
 ## Useful Queries
 
-Find all GitHub teams with less than four members.
+## Find all GitHub teams with less than four members.
 
     MATCH (t:GitHubTeam)
     OPTIONAL MATCH (t)-[:in_team]-(u:GitHubUser)
     WITH t, count(u) AS memberCount
     WHERE memberCount < 4
     RETURN t.name, t.organization, memberCount
+
+### Which users are in the most teams?
+
+    MATCH (u:GitHubUser)
+    OPTIONAL MATCH (u)-[:in_team]-(t:GitHubTeam)
+    WITH u, count(t) AS teamCount
+    RETURN u.name, u.organization, teamCount
+    ORDER BY teamCount DESC
+    LIMIT 5
+
+### And which teams contains the specified user?
+
+Specify the username inplace of `GITHUB_USER_NAME` to list a users teams
+
+    MATCH (u:GitHubUser { name: 'GITHUB_USER_NAME' })
+    OPTIONAL MATCH (u)-[:in_team]-(t:GitHubTeam)
+    RETURN t.name
+    ORDER BY t.name
+
+### Which user has access to the most repos?
+
+    MATCH (u:GitHubUser { name: 'GITHUB_USER_NAME' })
+    OPTIONAL MATCH (u)-[:in_team]-(t:GitHubTeam)-[:repo_permission]-(r:GitHubRepo)
+    WITH count(r) as repoCount
+    RETURN repoCount
+
+### And which repos do they have access to?
+
+    MATCH (u:GitHubUser { name: 'GITHUB_USER_NAME' })
+    OPTIONAL MATCH (u)-[:in_team]-(t:GitHubTeam)-[:repo_permission]-(r:GitHubRepo)
+    RETURN r.name
+    ORDER BY u.name

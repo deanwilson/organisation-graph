@@ -3,7 +3,6 @@
 ## Documentation
 
   * Doc page of the contents of `bin/`
-  * Extract all the data structure information to a data structures page
 
 ## Extract the Person class
 
@@ -21,6 +20,12 @@
  * GOV.UK use neo4j-driver==1.7.4
 
 Is this better for the querying aspect?
+
+## Roles
+
+ * Update the Role objects to add the salary ranges
+ * Document some queries around this.
+  * median quarterly cost
 
 ## Add Tox
 
@@ -45,7 +50,8 @@ Is this better for the querying aspect?
   - person node 'Dean' is 'relationship name' to person node 'Jo'
  * Document running the tests
   * pytest -v --ignore=tests/test_graph_contents.py
-
+ * GitHub
+  * Look for different teams with identical memberships
 
 ### Temporal relationships
 
