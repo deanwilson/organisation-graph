@@ -32,8 +32,8 @@ user_names.each do |user_name|
 
     relationship_data = {
       'relationship_type' => 'owned_by',
-      'source_node'       => "PuppetforgeModule[#{module_name.name}]",
-      'destination_node'  => "PuppetforgeUser[#{user_name}]",
+      'source_node'       => "PuppetforgeModule==#{module_name.name}",
+      'destination_node'  => "PuppetforgeUser==#{user_name}",
     }
 
     node_data[module_name.name] = module_data
