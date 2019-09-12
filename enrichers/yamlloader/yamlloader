@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+"""Load YAML based nodes and relationships into the OrgGraph."""
+import argparse
+import sys
+import os
+
+from neo4j import GraphDatabase
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../"))
+
+from orggraph.dataloader import yaml_loader, file_contents  # noqa: E402
+
+
+def _get_neo_pass():
+    """Get the current Neo4J password or kill the process."""
+    try:
+        "ORG_GRAPH_NEO_PASSWORD" in os.environ
+    except KeyError:
+        print("Please set the environment variable ORG_GRAPH_NEO_PASSWORD")
+        exit(1)
+
+    return os.environ["ORG_GRAPH_NEO_PASSWORD"]
+
+
+def create_node(tx, name, node_data):
+    """Create a graph node from a YAML structure."""
+    ntype = node_data["node_type"]
+
+    properties = ""
+
+    if "properties" in node_data:
+        properties += ", "
+
+        property_pairs = list(
+            {f"{k}: '{v}'" for (k, v) in node_data["properties"].items()}
+        )
+        properties += ", ".join(property_pairs)
+
+    cypher = f"CREATE (n:{ntype} " " { name:$name " + properties + "})"
+
+    tx.run(cypher, name=name)
+
+
+def create_relationship(tx, relationship):
+    """Create a relationship between two nodes."""
+    properties = ""
+    if "properties" in relationship:
+        properties += ", "
+
+        property_pairs = list(
+            {f"{k}: '{v}'" for (k, v) in relationship["properties"].items()}
+        )
+        properties += ", ".join(property_pairs)
+
+    source_type, source_name = relationship["source_node"].split("==")
+    dest_type, dest_name = relationship["destination_node"].split("==")
+
+    tx.run(
+        f"MATCH (s:{source_type}),(d:{dest_type})"
+        f"WHERE s.name = '{source_name}' AND d.name = '{dest_name}'"
+        "CREATE (s)-[r:" + relationship["relationship_type"] + "]->(d)"
+        "RETURN type(r)"
+    )
+
+
+def main(args):
+    """Add the YAML based nodes and relationships."""
+    yaml_data = yaml_loader(file_contents(args.datafile))
+
+    driver = GraphDatabase.driver(
+        "bolt://localhost:7687", auth=("neo4j", _get_neo_pass())
+    )
+
+    for node_name in yaml_data["nodes"]:
+        with driver.session() as session:
+            session.write_transaction(
+                create_node, node_name, yaml_data["nodes"][node_name]
+            )
+
+    for relationship in yaml_data["relationships"]:
+        with driver.session() as session:
+            session.write_transaction(create_relationship, relationship)
+
+    driver.close()
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(
+        description="Load YAML based nodes and relationships into the OrgGraph"
+    )
+
+    parser.add_argument(
+        "--datafile", type=str, help="File containing the YAML nodes and relationships"
+    )
+
+    args = parser.parse_args()
+
+    main(args)

@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'puppet_forge'
+require 'yaml'
+
+APP_NAME = File.basename $PROGRAM_NAME
+PuppetForge.user_agent = "OrgGraph PuppetForge Enricher/0.1.0"
+
+
+options = {}
+options[:output] = 'enriched-data/puppetforge-output.yaml'
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: #{APP_NAME} [--output output.yaml] <PUPPETFORGE_USERNAME> [PUPPETFORGE_USERNAME_2]"
+
+  opts.on('-f FILENAME', '--output FILENAME', 'File to write data to') do |v|
+    options[:output] = v
+  end
+end.parse!
+
+
+node_data = {}
+relationships = []
+
+user_names = ARGV.sort.uniq
+
+user_names.each do |user_name|
+  user = PuppetForge::User.find(user_name)
+
+  data = {
+    'node_type' => 'PuppetforgeUser',
+    'properties' => {
+      'display_name' => user.display_name
+    }
+  } 
+
+  node_data[user_name] = data
+
+  user.modules.each do |module_name|
+
+    module_data = {
+      'node_type' => 'PuppetforgeModule',
+    }
+
+    relationship_data = {
+      'relationship_type' => 'owned_by',
+      'source_node'       => "PuppetforgeModule==#{module_name.name}",
+      'destination_node'  => "PuppetforgeUser==#{user_name}",
+    }
+
+    node_data[module_name.name] = module_data
+    relationships << relationship_data
+  end
+end
+
+forge_data = {}
+forge_data['nodes'] = node_data
+forge_data['relationships'] = relationships
+
+open(options[:output], 'w') { |f|
+  f.puts forge_data.to_yaml
+}
+
+# Test handling for this failiure - non-exsistent user
+# Faraday::ResourceNotFound: the server responded with status 404
+
+## Create a link between the Puppetforge module and the github it comes from
+#modules[0].homepage_url
+#=> "https://github.com/gds-operations/puppet-resolvconf"
+#require 'uri'
+#uri = URI(modules[0].homepage_url)
+#github_user, github_repo = uri.path.split('/').reject { |p| p.empty? }

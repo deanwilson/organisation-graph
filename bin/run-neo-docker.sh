@@ -9,7 +9,8 @@ mkdir -p "${BASE}/neo4j/"{data,logs,import,plugins}
 
 docker run \
     --name neo4j-backend \
-    -p7474:7474 -p7687:7687 \
+    --publish=7474:7474 \
+    --publish=7687:7687 \
     -d \
     -v "$BASE/neo4j/data:/data" \
     -v "$BASE/neo4j/logs:/logs" \
