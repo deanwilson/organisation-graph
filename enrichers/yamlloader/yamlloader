@@ -24,25 +24,43 @@ def _get_neo_pass():
 
 def create_node(tx, name, node_data):
     """Create a graph node from a YAML structure."""
-
     ntype = node_data["node_type"]
 
     properties = ""
 
     if "properties" in node_data:
-       print(node_data["properties"])
-       properties += ", "
+        properties += ", "
 
-       property_pairs = list({ f"{k}: '{v}'" for (k,v) in node_data["properties"].items() })
-       properties += ", ".join(property_pairs)
-       print(properties)
+        property_pairs = list(
+            {f"{k}: '{v}'" for (k, v) in node_data["properties"].items()}
+        )
+        properties += ", ".join(property_pairs)
 
     cypher = f"CREATE (n:{ntype} " " { name:$name " + properties + "})"
 
+    tx.run(cypher, name=name)
+
+
+def create_relationship(tx, relationship):
+    """Create a relationship between two nodes."""
+    properties = ""
+    if "properties" in relationship:
+        properties += ", "
+
+        property_pairs = list(
+            {f"{k}: '{v}'" for (k, v) in relationship["properties"].items()}
+        )
+        properties += ", ".join(property_pairs)
+
+    source_type, source_name = relationship["source_node"].split("==")
+    dest_type, dest_name = relationship["destination_node"].split("==")
+
     tx.run(
-       cypher,
-       name=name
-      )
+        f"MATCH (s:{source_type}),(d:{dest_type})"
+        f"WHERE s.name = '{source_name}' AND d.name = '{dest_name}'"
+        "CREATE (s)-[r:" + relationship["relationship_type"] + "]->(d)"
+        "RETURN type(r)"
+    )
 
 
 def main(args):
@@ -55,7 +73,13 @@ def main(args):
 
     for node_name in yaml_data["nodes"]:
         with driver.session() as session:
-            session.write_transaction(create_node, node_name, yaml_data["nodes"][node_name])
+            session.write_transaction(
+                create_node, node_name, yaml_data["nodes"][node_name]
+            )
+
+    for relationship in yaml_data["relationships"]:
+        with driver.session() as session:
+            session.write_transaction(create_relationship, relationship)
 
     driver.close()
 
@@ -67,9 +91,7 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--datafile",
-        type=str,
-        help="File containing the YAML nodes and relationships",
+        "--datafile", type=str, help="File containing the YAML nodes and relationships"
     )
 
     args = parser.parse_args()
