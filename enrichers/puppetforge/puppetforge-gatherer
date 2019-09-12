@@ -5,7 +5,7 @@ require 'yaml'
 PuppetForge.user_agent = "OrgGraph PuppetForge Enricher/0.1.0"
 
 node_data = {}
-relationships = {}
+relationships = []
 
 # TODO: Make this a cli param
 user_names = ['gdsoperations', 'deanwilson'].sort.uniq
@@ -37,7 +37,7 @@ user_names.each do |user_name|
     }
 
     node_data[module_name.name] = module_data
-    relationships[module_name.name] = relationship_data
+    relationships << relationship_data
   end
 end
 
