@@ -27,10 +27,20 @@ def create_node(tx, name, node_data):
 
     ntype = node_data["node_type"]
 
+    properties = ""
+
+    if "properties" in node_data:
+       print(node_data["properties"])
+       properties += ", "
+
+       property_pairs = list({ f"{k}: '{v}'" for (k,v) in node_data["properties"].items() })
+       properties += ", ".join(property_pairs)
+       print(properties)
+
+    cypher = f"CREATE (n:{ntype} " " { name:$name " + properties + "})"
+
     tx.run(
-       f"CREATE (n:{ntype}"
-       " { name:$name }"
-       ")",
+       cypher,
        name=name
       )
 
