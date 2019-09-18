@@ -68,9 +68,9 @@ Or as a pretty graph
 Show all the people in the team that owns a service. This can be handy for finding
 people to help you in an incident.
 
-    MATCH (s:Service {name: 'Prison 42'})-[:`owns`]-(t:Team)
-    MATCH (t:Team)-[:`assigned to`]-(p:Person)
-    RETURN  s.name as Service, p.name as Owners
+    MATCH  (s:Service {name: 'Webchat'})-[:`owns`]-(t:Team)
+    MATCH  (t:Team)-[:`in_team`]-(e:Employee)
+    RETURN  s.name as Service, e.name as Owners
 
 ## Data and data formats
 
