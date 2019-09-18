@@ -10,7 +10,6 @@ from orggraph.service import Service  # noqa: E402
 
 def test_creation():
     """Test basic Services object creation."""
-
     services = Services("data/services.yaml")
 
     # Confirm a known service is present in the loaded objects

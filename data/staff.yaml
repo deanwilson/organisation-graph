@@ -1,181 +1,199 @@
-
+staff:
 ## Director
-
-Susan Storm:
-  assigned_to:
-    - Senior Management
-    - Director
-  is_a: 'Director of Technology'
-  manages:
-    - Scott Summers
-    - Phillip Coulson
-  member_of: Technology
+  100001:
+    name: Susan Storm
+    teams:
+      - Senior Management
+      - Directors
+    job_title: 'Director of Technology'
+    manages:
+      - Scott Summers
+      - Phillip Coulson
+    department: Technology
 
 ## Department Heads
+  100002:
+    name: Scott Summers
+    teams:
+      - Management
+    job_title: 'Head of Development'
+    manages:
+      - James Howlett
+      - James Proudstar
+      - Tabitha Smith
+      - Samuel Guthrie
+      - Wade Wilson
+      - Warren Worthington
+      - Jean Grey-Summers
+      - Emma Frost
+    department: Technology
 
-Scott Summers:
-  assigned_to:
-    - Management
-  is_a: 'Head of Development'
-  manages:
-    - James Howlett
-    - James Proudstar
-    - Tabitha Smith
-    - Samuel Guthrie
-    - Wade Wilson
-    - Warren Worthington
-    - Jean Grey-Summers
-    - Emma Frost
-  member_of: Technology
+  100003:
+    name: Phillip Coulson
+    teams:
+      - Management
+    job_title: 'Head of Infrastructure'
+    manages:
+      - Bobbi Morse
+      - Elena Rodriguez
+      - Jemma Simmons
+      - Lance Hunter
+      - Leo Fitz
+      - Melinda May
+    department: Technology
 
+  ## Infrastructure teams
+  100004:
+    name: Melinda May
+    teams:
+      - Frontend
+    job_title: 'Senior SRE'
+    manages:
+     - Piper
+    department: Infrastructure
+    tech_lead:
+     - Frontend
 
-Phillip Coulson:
-  assigned_to:
-    - Management
-  is_a: 'Head of Infrastructure'
-  manages:
-    - Bobbi Morse
-    - Elena Rodriguez
-    - Jemma Simmons
-    - Lance Hunter
-    - Leo Fitz
-    - Melinda May
-  member_of: Technology
+  100005:
+    name: Leo Fitz
+    teams:
+      - Backend
+    job_title: 'Senior SRE'
+    department: Infrastructure
 
-## Infrastructure teams
+  100006:
+    name: Jemma Simmons
+    teams:
+      - Backend
+    job_title: 'Senior SRE'
+    manages:
+     - Deke Shaw
+    department: Infrastructure
 
-Melinda May:
-  assigned_to:
-    - Frontend
-  is_a: 'Senior SRE'
-  manages:
-   - Piper
-  member_of: Infrastructure
-  tech_lead:
-   - Frontend
+  100007:
+    name: Elena Rodriguez
+    teams:
+      - Frontend
+    job_title: 'SRE'
+    department: Infrastructure
 
-Leo Fitz:
-  assigned_to:
-    - Backend
-  is_a: 'Senior SRE'
-  member_of: Infrastructure
+  100008:
+    name: Lance Hunter
+    teams:
+      - Frontend
+    job_title: 'SRE'
+    department: Infrastructure
 
-Jemma Simmons:
-  assigned_to:
-    - Backend
-  is_a: 'Senior SRE'
-  manages:
-   - Deke Shaw
-  member_of: Infrastructure
+  100009:
+    name: Bobbi Morse
+    teams:
+      - Frontend
+    job_title: 'SRE'
+    department: Infrastructure
 
-Elena Rodriguez:
-  assigned_to:
-    - Frontend
-  is_a: 'SRE'
-  member_of: Infrastructure
+  100010:
+    name: Deke Shaw
+    teams:
+      - Backend
+    job_title: 'Junior SRE'
+    department: Infrastructure
+    on_probation: True
 
-Lance Hunter:
-  assigned_to:
-    - Frontend
-  is_a: 'SRE'
-  member_of: Infrastructure
+  100011:
+    name: Piper
+    teams:
+      - Frontend
+    job_title: 'Junior SRE'
+    department: Infrastructure
+    on_probation: True
 
-Bobbi Morse:
-  assigned_to:
-    - Frontend
-  is_a: 'SRE'
-  member_of: Infrastructure
+  ## Development team
 
-Deke Shaw:
-  assigned_to:
-    - Backend
-  is_a: 'Junior SRE'
-  member_of: Infrastructure
-  on_probation: True
+  100012:
+    name: James Howlett
+    teams:
+      - Frontend
+    job_title: 'Senior Developer'
+    department: Development
+    manages:
+     - Gaveedra Seven
 
-Piper:
-  assigned_to:
-    - Frontend
-  is_a: 'Junior SRE'
-  member_of: Infrastructure
-  on_probation: True
+  100013:
+    name: Warren Worthington
+    teams:
+      - Frontend
+    job_title: 'Senior Developer'
+    department: Development
 
-## Development team
+  100014:
+    name: Samuel Guthrie
+    teams:
+      - Frontend
+    job_title: 'Senior Developer'
+    department: Development
 
-James Howlett:
-  assigned_to:
-    - Frontend
-  is_a: 'Senior Developer'
-  member_of: Development
-  manages:
-   - Gaveedra Seven
+  100015:
+    name: James Proudstar
+    teams:
+      - Frontend
+    job_title: 'Developer'
+    department: Development
 
-Warren Worthington:
-  assigned_to:
-    - Frontend
-  is_a: 'Senior Developer'
-  member_of: Development
+  100016:
+    name: Wade Wilson
+    teams:
+      - Frontend
+    job_title: 'Developer'
+    department: Development
 
-Samuel Guthrie:
-  assigned_to:
-    - Frontend
-  is_a: 'Senior Developer'
-  member_of: Development
+  100017:
+    name: Gaveedra Seven
+    teams:
+      - Frontend
+    job_title: 'Junior Developer'
+    department: Development
+    aliases:
+      - Shatterstar
 
-James Proudstar:
-  assigned_to:
-    - Frontend
-  is_a: 'Developer'
-  member_of: Development
+  100018:
+    name: Tabitha Smith
+    teams:
+      - Frontend
+    job_title: 'Junior Developer'
+    department: Development
+    on_probation: True
 
-Wade Wilson:
-  assigned_to:
-    - Frontend
-  is_a: 'Developer'
-  member_of: Development
+  100019:
+    name: Jean Grey-Summers
+    teams:
+      - Backend
+    job_title: 'Senior Developer'
+    department: Development
+    tech_lead:
+      - Backend
 
-Gaveedra Seven:
-  assigned_to:
-    - Frontend
-  is_a: 'Junior Developer'
-  member_of: Development
-  aliases:
-    - Shatterstar
+  100020:
+    name: Emma Frost
+    teams:
+      - Backend
+    job_title: 'Senior Developer'
+    manages:
+     - Celeste Cuckoo
+     - Phoebe Cuckoo
+    department: Development
 
-Tabitha Smith:
-  assigned_to:
-    - Frontend
-  is_a: 'Junior Developer'
-  member_of: Development
-  on_probation: True
+  100021:
+    name: Celeste Cuckoo
+    teams:
+      - Backend
+    job_title: 'Junior Developer'
+    department: Development
+    on_probation: True
 
-Jean Grey-Summers:
-  assigned_to:
-    - Backend
-  is_a: 'Senior Developer'
-  member_of: Development
-  tech_lead:
-    - Backend
-
-Emma Frost:
-  assigned_to:
-    - Backend
-  is_a: 'Senior Developer'
-  manages:
-   - Celeste Cuckoo
-   - Phoebe Cuckoo
-  member_of: Development
-
-Celeste Cuckoo:
-  assigned_to:
-    - Backend
-  is_a: 'Junior Developer'
-  member_of: Development
-  on_probation: True
-
-Phoebe Cuckoo:
-  assigned_to:
-    - Backend
-  is_a: 'Junior Developer'
-  member_of: Development
-  on_probation: True
+  100022:
+    name: Phoebe Cuckoo
+    teams:
+      - Backend
+    job_title: 'Junior Developer'
+    department: Development
+    on_probation: True

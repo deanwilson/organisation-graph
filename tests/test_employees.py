@@ -10,10 +10,9 @@ from orggraph.employee import Employee  # noqa: E402
 
 def test_creation():
     """Test basic employees object creation."""
+    employees = Employees("data/staff-hash.yaml")
 
-    employees = Employees("data/staff.yaml")
+    # Confirm a known employee_id is present in the loaded objects
+    assert 100018 in employees.employee_list.keys()  # "Tabitha Smith"
 
-    # Confirm a known employee is present in the loaded objects
-    assert "Tabitha Smith" in employees.employee_list.keys()
-
-    assert isinstance(employees.employee_list["Tabitha Smith"], Employee)
+    assert isinstance(employees.employee_list[100018], Employee)

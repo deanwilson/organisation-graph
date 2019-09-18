@@ -11,7 +11,7 @@ class Employees:
         """Load the supplied employee YAML and convert it into Employee objects."""
         employees = {}
 
-        employees = yaml_loader(file_contents(self.path))
+        employees = yaml_loader(file_contents(self.path))["staff"]
 
         for employee in employees:
             employees[employee] = Employee(employee, employees[employee])

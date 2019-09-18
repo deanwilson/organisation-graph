@@ -1,0 +1,95 @@
+#!/usr/bin/env python3
+"""Generate intermediate YAML representation of Services."""
+import argparse
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../"))
+
+from orggraph.services import Services  # noqa: E402
+from yaml import dump, Dumper  # noqa: E402
+
+
+def set_to_node(node_type, sets):
+    nodes = {}
+    node_type = node_type.title()
+
+    for value in sets:
+        nodes[value] = {}
+        nodes[value]["node_type"] = node_type
+
+    return nodes
+
+
+def main(args):
+    """Load the Service YAML and convert it into the Node/Relationship loading format."""
+    services = Services(args.source)
+
+    service_nodes = {}
+    technology_nodes = set()
+    team_nodes = set()
+    relationships = []
+
+    for service in services.services():
+        details = {}
+        details["node_type"] = "Service"
+
+        details["properties"] = {"name": service.name}
+
+        relationships.append(
+            {
+                "relationship_type": "owns",
+                "source_node": f"Team=={service.owner}",
+                "destination_node": f"Service=={service.name}",
+            }
+        )
+
+        team_nodes.add(service.owner)
+
+        for tech in service.technologies:
+            technology_nodes.add(tech)
+
+            relationships.append(
+                {
+                    "relationship_type": "uses",
+                    "source_node": f"Service=={service.name}",
+                    "destination_node": f"Technology=={tech}",
+                }
+            )
+
+        service_nodes[service.name] = details
+
+    nodes = {}
+    nodes.update(service_nodes)
+    nodes.update(set_to_node("Technology", technology_nodes))
+    nodes.update(set_to_node("Team", team_nodes))
+
+    with open(args.output, "w") as file:
+        file.write(
+            dump({"nodes": nodes, "relationships": relationships}, Dumper=Dumper)
+        )
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(
+        description="Generate OrgGraph nodes and relationships from the service YAML"
+    )
+
+    parser.add_argument(
+        "--source",
+        type=str,
+        default="data/services.yaml",
+        help="File containing the YAML source data",
+    )
+
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="generated-data/services.yaml",
+        help="The file to write output to",
+    )
+
+    args = parser.parse_args()
+
+    main(args)

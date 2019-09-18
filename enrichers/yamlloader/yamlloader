@@ -36,7 +36,7 @@ def create_node(tx, name, node_data):
         )
         properties += ", ".join(property_pairs)
 
-    cypher = f"CREATE (n:{ntype} " " { name:$name " + properties + "})"
+    cypher = f"MERGE (n:{ntype} " " { name:$name " + properties + "})"
 
     tx.run(cypher, name=name)
 
@@ -58,7 +58,7 @@ def create_relationship(tx, relationship):
     tx.run(
         f"MATCH (s:{source_type}),(d:{dest_type})"
         f"WHERE s.name = '{source_name}' AND d.name = '{dest_name}'"
-        "CREATE (s)-[r:" + relationship["relationship_type"] + "]->(d)"
+        "CREATE (s)-[r:`" + relationship["relationship_type"] + "`]->(d)"
         "RETURN type(r)"
     )
 
@@ -71,15 +71,17 @@ def main(args):
         "bolt://localhost:7687", auth=("neo4j", _get_neo_pass())
     )
 
-    for node_name in yaml_data["nodes"]:
-        with driver.session() as session:
-            session.write_transaction(
-                create_node, node_name, yaml_data["nodes"][node_name]
-            )
+    if "nodes" in yaml_data:
+        for node_name in yaml_data["nodes"]:
+            with driver.session() as session:
+                session.write_transaction(
+                    create_node, node_name, yaml_data["nodes"][node_name]
+                )
 
-    for relationship in yaml_data["relationships"]:
-        with driver.session() as session:
-            session.write_transaction(create_relationship, relationship)
+    if "relationships" in yaml_data:
+        for relationship in yaml_data["relationships"]:
+            with driver.session() as session:
+                session.write_transaction(create_relationship, relationship)
 
     driver.close()
 

@@ -4,29 +4,6 @@
 
   * Doc page of the contents of `bin/`
 
-## Extract the Person class
-
- * Convert the person hash to a collection of objects #class Person: def __init__(self): in the graph building script
-
-## Migrate build graph script to objects
-
- * Add node caching to the objects
- * remove all the YAML literal / dict focus code
-
-## Move to the official neo4j driver?
-
- * Should I move to https://github.com/neo4j/neo4j-python-driver ?
-  * [Example of relationships](https://github.com/neo4j/neo4j-python-driver/blob/963936fab6216840c63877114150426badde97cb/tests/examples/pass_bookmarks_example.py)
- * GOV.UK use neo4j-driver==1.7.4
-
-Is this better for the querying aspect?
-
-## Roles
-
- * Update the Role objects to add the salary ranges
- * Document some queries around this.
-  * median quarterly cost
-
 ## Add Tox
 
  * run tests under multiple python versions
@@ -53,6 +30,11 @@ Is this better for the querying aspect?
  * GitHub
   * Look for different teams with identical memberships
 
+The relationship specifier in enrichers/employees/generator still uses
+the name to link people to roles/teams/departments. May need to pass a
+3rd thing through - property to match on - to allow matching somethings
+by ID and some by name
+
 ### Temporal relationships
 
 The current graph is completely point in time and allows no history or versioning
@@ -61,3 +43,8 @@ outside of keeping the configs inside git
  * Add multiple relationships
  * one with current
  * one per time period
+
+
+### Links
+https://medium.com/neo4j/py2neo-v4-2bedc8afef2
+https://stackoverflow.com/questions/46814462/jsonify-bolt-statementresult

@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+"""Generate intermediate YAML representation of the Jobs."""
+import argparse
+import sys
+import os
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "../../"))
+
+from orggraph.jobs import Jobs  # noqa: E402
+from yaml import dump, Dumper  # noqa: E402
+
+
+def main(args):
+    """Load the Jobs YAML and convert it into the Node/Relationship loading format."""
+    jobs = Jobs(args.source)
+
+    job_nodes = {}
+    for job in jobs.jobs():
+        details = {}
+        details["node_type"] = "Job"
+
+        details["properties"] = {
+            "salary_range": job.salary_range,
+            "median_salary": job.salary["median"],
+        }
+
+        job_nodes[job.title] = details
+
+    with open(args.output, "w") as file:
+        file.write(dump({"nodes": job_nodes}, Dumper=Dumper))
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(
+        description="Generate OrgGraph nodes and relationships from the Jobs YAML"
+    )
+
+    parser.add_argument(
+        "--source",
+        type=str,
+        default="data/jobs.yaml",
+        help="File containing the YAML source data",
+    )
+
+    parser.add_argument(
+        "--output",
+        type=str,
+        default="generated-data/job-nodes.yaml",
+        help="The file to write output to",
+    )
+
+    args = parser.parse_args()
+
+    main(args)

@@ -1,3 +1,4 @@
+"""Test the Job object and its properties."""
 import os
 import sys
 
@@ -9,6 +10,7 @@ from orggraph.job import Job  # noqa: E402
 
 
 def test_salary():
+    """Ensure the Job object has a salary defined."""
     title = "Test Writer"
     job_details = {"salary": "123456"}
 
@@ -18,6 +20,7 @@ def test_salary():
 
 
 def test_salary_range():
+    """Ensure the salary range parsing code is working correctly."""
     title = "Test Writer"
     job_details = {"salary": "12345-54321"}
 

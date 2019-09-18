@@ -20,9 +20,9 @@ def graph_connect():
 
 
 def test_person_nodes(graph_connect):
-    """Ensure the graph contains Person nodes."""
+    """Ensure the graph contains Employee nodes."""
     with graph_connect.session() as session:
-        result = session.run("MATCH (Person { name: 'Leo Fitz' }) return (Person)")
+        result = session.run("MATCH (Employee { name: 'Leo Fitz' }) return (Employee)")
 
     person = result.single()
 
@@ -34,7 +34,7 @@ def test_person_relationships(graph_connect):
     """Ensure the expected node relations exist."""
     with graph_connect.session() as session:
         result = session.run(
-            "MATCH (:Person { name: 'Melinda May' })-[r]->(rela)"
+            "MATCH (:Employee { name: 'Melinda May' })-[r]->(rela)"
             "RETURN type(r) as relation_name, (rela.name) as remote_node_value"
         )
 
@@ -48,8 +48,8 @@ def test_person_relationships(graph_connect):
         node_relations[relation["relation_name"]] = relation["remote_node_value"]
 
     # and she is a tech lead
-    assert "tech lead" in node_relations, "Node has a 'tech lead' relationship"
-    assert node_relations["tech lead"] == "Frontend"
+    assert "tech_lead" in node_relations, "Node has a 'tech lead' relationship"
+    assert node_relations["tech_lead"] == "Frontend"
 
     # and she manages
     assert "manages" in node_relations, "Node has a 'manages' relationship"
@@ -59,9 +59,9 @@ def test_person_relationships(graph_connect):
     assert "is a" in node_relations, "Node has a 'is a' relationship"
     assert node_relations["is a"] == "Senior SRE"
 
-    # and she is assigned
-    assert "assigned to" in node_relations, "Node has a 'assigned to' relationship"
-    assert node_relations["assigned to"] == "Frontend"
+    # and she is in a team
+    assert "in_team" in node_relations, "Node has a 'in_team' relationship"
+    assert node_relations["in_team"] == "Frontend"
 
     # and she is a member of
     assert "member of" in node_relations, "Node has a 'member of' relationship"
