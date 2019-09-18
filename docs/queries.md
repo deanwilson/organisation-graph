@@ -38,22 +38,22 @@ In the Python code you can achieve the same results with
 If you want to find everyone with an exact role you can use the `role name`
 attribute. In this example we return everyone who is a `Senior SRE`
 
-    MATCH (p:Person)-[`is a`]-(r:Role {name:'Senior SRE'}) return p.name as Employee, r.name as Role
+    MATCH (e:Employee)-[`is a`]-(j:Job {name:'Senior SRE'}) return e.name as Employee, j.name as Job
 
 You can also match on sub strings inside an attribute. In the next query we will
 find everyone who is a Senior.
 
-    MATCH (p:Person)-[`is a`]-(r:Role)
-    WHERE r.name STARTS WITH 'Senior'
-    RETURN p as Employee, r as Role
+    MATCH (e:Employee)-[`is a`]-(j:Job)
+    WHERE j.name STARTS WITH 'Senior'
+    RETURN e as Employee, j as Job
 
 ![Graph view of all Seniors](/images/senior-graph.png "Neo4J node browser showing Seniors")
 
 And the same query results, but represented as a table
 
-    MATCH (p:Person)-[`is a`]-(r:Role)
-    WHERE r.name STARTS WITH 'Senior'
-    RETURN p.name as Employee, r.name as Role
+    MATCH (e:Employee)-[`is a`]-(j:Job)
+    WHERE j.name STARTS WITH 'Senior'
+    RETURN e.name as Employee, j.name as Job
 
 ![Table view of all Seniors](/images/senior-table.png "Textual Table showing Seniors")
 
@@ -61,8 +61,8 @@ And the same query results, but represented as a table
 
 Show the tech lead from each team.
 
-    MATCH (p:Person)-[:`tech lead`]-(t:Team)
-    return p.name as Employee, t.name as Team
+    MATCH (e:Employee)-[:`tech_lead`]-(t:Team)
+    return e.name as Employee, t.name as Team
     ORDER BY Employee
 
 ## Team focused queries
@@ -71,12 +71,12 @@ Show the tech lead from each team.
 
 Show everyone in the given team as a table
 
-    MATCH (p:Person)-[:`assigned to`]-(t:Team {name:'Frontend'}) return p.name, t.name
+    MATCH (e:Employee)-[:`in_team`]-(t:Team {name:'Frontend'}) return e.name, t.name
 
 and as a graph. In this view you can also see the other relationships. This can
 make further avenues of exploration easier.
 
-    MATCH (p:Person)-[:`assigned to`]-(t:Team {name:'Frontend'}) return p, t
+    MATCH (e:Employee)-[:`in_team`]-(t:Team {name:'Frontend'}) return e, t
 
 ![Graph of Team relationships](/images/team-members.png
   "Neo4J node browser showing everyone in a team and their other relationships to each other")
@@ -85,19 +85,19 @@ make further avenues of exploration easier.
 
 Show everyone who is a `Senior` and the team they are in.
 
-    MATCH (p:Person)-[`is a`]-(r:Role)
-    MATCH (p)-[`assigned to`]-(t:Team)
-    WHERE r.name STARTS WITH 'Senior'
-    RETURN p.name as Employee, r.name as Role, t.name as Team
+    # TODO: shows double of two staff. Why?
+    MATCH (e:Employee)-[`is a`]-(j:Job)
+    WHERE j.name STARTS WITH 'Senior'
+    MATCH (e)-[`in_team`]-(t:Team)
+    RETURN e.name as Employee, j.name as Job, t.name as Team
     ORDER BY Team
-
 
 ### Show the services a team owns
 
 Being able to determine the owner of a service is a basic but important
 building block for other, more interesting, queries.
 
-    MATCH (t:Team)-[`owns`]-(s:Service)
+    MATCH  (t:Team)-[`owns`]-(s:Service)
     RETURN  t.name as Team, s.name as Service
 
 Graph version
@@ -108,14 +108,14 @@ Graph version
 ### Show the technical lead for services
 
     MATCH (s:Service)-[:`owns`]-(t:Team)
-    MATCH (t:Team)-[:`tech lead`]-(p:Person)
-    RETURN s.name as Service, t.name as Team, p.name as TechLead
+    MATCH (t:Team)-[:`tech_lead`]-(e:Employee)
+    RETURN s.name as Service, t.name as Team, e.name as TechLead
 
 And as a graph
 
     MATCH (s:Service)-[:`owns`]-(t:Team)
-    MATCH (t:Team)-[:`tech lead`]-(p:Person)
-    RETURN s as Service, t as Team, p as TechLead
+    MATCH (t:Team)-[:`tech_lead`]-(e:Employee)
+    RETURN s as Service, t as Team, e as TechLead
 
 ![Graph of TechLead to Service relationships](/images/service-tech-lead.png 
   "Neo4J node browser showing the tech lead for a service")
@@ -126,14 +126,14 @@ Sometimes you just need to find _anyone_ involved in a service. This query
 will find everyone on the owning team.
 
     MATCH (s:Service {name: 'Webchat'})-[:`owns`]-(t:Team)
-    MATCH (t:Team)-[:`assigned to`]-(p:Person)
-    RETURN s.name as Service, p.name as Owners
+    MATCH (t:Team)-[:`in_team`]-(e:Employee)
+    RETURN s.name as Service, e.name as Owners
 
 ### Show the running cost of a team
 
-    MATCH (p:Person)-[:`assigned to`]-(t:Team {name:'Frontend'})
-    OPTIONAL MATCH (p)-[:`is a`]-(r:Role)
-    RETURN SUM(r.salary) as `Annual team running cost`
+    MATCH (e:Employee)-[:`in_team`]-(t:Team {name:'Frontend'})
+    OPTIONAL MATCH (e)-[:`is a`]-(j:Job)
+    RETURN SUM(toInteger(j.median_salary)) as `Annual team running cost`
 
 ## External Links
 
