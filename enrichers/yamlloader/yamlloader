@@ -71,15 +71,17 @@ def main(args):
         "bolt://localhost:7687", auth=("neo4j", _get_neo_pass())
     )
 
-    for node_name in yaml_data["nodes"]:
-        with driver.session() as session:
-            session.write_transaction(
-                create_node, node_name, yaml_data["nodes"][node_name]
-            )
+    if "nodes" in yaml_data:
+        for node_name in yaml_data["nodes"]:
+            with driver.session() as session:
+                session.write_transaction(
+                    create_node, node_name, yaml_data["nodes"][node_name]
+                )
 
-    for relationship in yaml_data["relationships"]:
-        with driver.session() as session:
-            session.write_transaction(create_relationship, relationship)
+    if "relationships" in yaml_data:
+        for relationship in yaml_data["relationships"]:
+            with driver.session() as session:
+                session.write_transaction(create_relationship, relationship)
 
     driver.close()
 
