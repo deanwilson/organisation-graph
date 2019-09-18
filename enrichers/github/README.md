@@ -23,7 +23,7 @@ GitHub and export it into the shell you want to run the commands from
 
     ./enrichers/github/github-gatherer -o GITHUB_ORGANIZATION_NAME
 
-You can view the gathered data in the `enriched-data` directory
+You can view the gathered data in the `generated-data` directory
 
 ### Running the loader
 
