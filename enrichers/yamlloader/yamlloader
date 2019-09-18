@@ -58,7 +58,7 @@ def create_relationship(tx, relationship):
     tx.run(
         f"MATCH (s:{source_type}),(d:{dest_type})"
         f"WHERE s.name = '{source_name}' AND d.name = '{dest_name}'"
-        "CREATE (s)-[r:" + relationship["relationship_type"] + "]->(d)"
+        "CREATE (s)-[r:`" + relationship["relationship_type"] + "`]->(d)"
         "RETURN type(r)"
     )
 
