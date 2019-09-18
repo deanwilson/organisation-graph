@@ -30,6 +30,11 @@
  * GitHub
   * Look for different teams with identical memberships
 
+The relationship specifier in enrichers/employees/generator still uses
+the name to link people to roles/teams/departments. May need to pass a
+3rd thing through - property to match on - to allow matching somethings
+by ID and some by name
+
 ### Temporal relationships
 
 The current graph is completely point in time and allows no history or versioning
@@ -42,3 +47,4 @@ outside of keeping the configs inside git
 
 ### Links
 https://medium.com/neo4j/py2neo-v4-2bedc8afef2
+https://stackoverflow.com/questions/46814462/jsonify-bolt-statementresult
