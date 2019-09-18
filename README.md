@@ -35,10 +35,22 @@ experiment stays isolated.
     $ pip install -r requirements.txt
     Successfully installed ...snip... py2neo-4.3.0 pyyaml-5.1.1 ...snip...
 
-Dependencies done you can now run `python3 build-graph.py` from the shell you
-activated the `venv` in and exported the Neo4J password. Once this has
-completed, open a web browser to <http://127.0.0.1:7474/browser/>, login and run
-a query to show all results:
+Dependencies done you can now create the sample datasets and, from the shell you
+activated the `venv` in and exported the Neo4J password, run the importers.
+
+    # Generate the sample data
+    ./enrichers/jobs/generator
+    ./enrichers/employees/generator
+    ./enrichers/services/generator
+
+    # And load it into the graph
+    ./enrichers/yamlloader/yamlloader --datafile generated-data/job-nodes.yaml
+    ./enrichers/yamlloader/yamlloader --datafile generated-data/employees.yaml 
+    ./enrichers/yamlloader/yamlloader --datafile generated-data/services.yaml
+
+Once this has completed, open a web browser to
+<http://127.0.0.1:7474/browser/>, login, and run a query to show
+all results:
 
     MATCH (n) return n
 
