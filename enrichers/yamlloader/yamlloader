@@ -36,7 +36,7 @@ def create_node(tx, name, node_data):
         )
         properties += ", ".join(property_pairs)
 
-    cypher = f"CREATE (n:{ntype} " " { name:$name " + properties + "})"
+    cypher = f"MERGE (n:{ntype} " " { name:$name " + properties + "})"
 
     tx.run(cypher, name=name)
 
