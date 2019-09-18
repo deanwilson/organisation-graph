@@ -9,15 +9,18 @@ from orggraph.employee import Employee  # noqa: E402
 
 def test_creation():
     """Test basic employee object creation."""
-    name = "Craig Hollis"
+
+    employee_id = 1001
     details = {
+        "name": "Craig Hollis",
         "aliases": ["Mr Immortal"],
-        "is_a": "Leader",
+        "job_title": "Leader",
         "manages": ["DeMarr Davis", "Dinah Soar"],
         "member_of": "Great Lakes Avengers",
-        "assigned_to": "Mutant",
+        "teams": ["Mutant"],
     }
 
-    employee = Employee(name, details)
+    employee = Employee(employee_id, details)
 
+    assert employee.name == "Craig Hollis"
     assert employee.aliases[0] == "Mr Immortal"

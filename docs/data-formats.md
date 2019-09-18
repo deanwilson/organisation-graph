@@ -10,27 +10,27 @@ in this document.
 The individual Employee entries should look like this:
 
     FirstName LastName:
-      assigned_to:
+      in_team:
         - Team-1
         - Team-2
-      is_a: 'Role title'
+      job_title: 'Role title'
       manages:
         - "FirstName LastName 1"
         - "FirstName LastName 2"
         - "FirstName LastName 3"
-      member_of: "Department Name"
+      department: "Department Name"
 
 and a worked example:
 
     Malcolm Reynolds:
-      assigned_to:
+      in_team:
         - Serenity
-      is_a: 'Captain'
+      job_title: 'Captain'
       manages:
         - Kaylee
         - Wash
         - Jayne Cobb
-      member_of: Independents
+      department: Independents
 
 It's worth noting nearly every element is optional, the less you specify the
 less interesting the result set.
@@ -63,5 +63,5 @@ that exactly means will be heavily tied to your own environment.
           - Java
 
  * The service name is free form text
- * The `owner` should match a team specified in the `assigned_to` field of one of more employees
+ * The `owner` should match a team specified in the `in_team` field of one of more employees
  * `technologies` is a list of free form text technology names
