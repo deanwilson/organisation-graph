@@ -10,7 +10,6 @@ from orggraph.job import Job  # noqa: E402
 
 def test_creation():
     """Test basic jobs object creation."""
-
     jobs = Jobs("data/jobs.yaml")
 
     # Confirm a known job is present in the loaded objects

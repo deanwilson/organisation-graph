@@ -9,7 +9,6 @@ from orggraph.employee import Employee  # noqa: E402
 
 def test_creation():
     """Test basic employee object creation."""
-
     employee_id = 1001
     details = {
         "name": "Craig Hollis",
