@@ -66,7 +66,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--output",
         type=str,
-        default="enriched-data/github-output.yaml",
+        default="generated-data/github-output.yaml",
         help="The file to write output to",
     )
 

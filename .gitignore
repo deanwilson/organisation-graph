@@ -3,4 +3,4 @@ __pycache__/
 pytestdebug.log
 Gemfile.lock
 .ruby-version
-enriched-data/*
+generated-data/*

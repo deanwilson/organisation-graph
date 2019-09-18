@@ -145,7 +145,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--datafile",
         type=str,
-        default="enriched-data/github-output.yaml",
+        default="generated-data/github-output.yaml",
         help="File containing the GitHub metadata. Stored as YAML",
     )
 
