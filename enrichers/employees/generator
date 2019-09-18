@@ -17,7 +17,7 @@ def set_to_node(node_type, sets):
     for value in sets:
         nodes[value] = {}
         nodes[value]["node_type"] = node_type
-   
+
     return nodes
 
 
@@ -25,7 +25,7 @@ def main(args):
     """Load the Employee YAML and convert it into the Node/Relationship loading format."""
     employees = Employees(args.source)
 
-    nodes = { "employee": {}, "team": set(), "job": set(), "department": set()}
+    nodes = {"employee": {}, "team": set(), "job": set(), "department": set()}
     relationships = []
 
     for employee in employees.employees():
@@ -35,19 +35,20 @@ def main(args):
         details["properties"]["name"] = employee.name
         details["properties"]["employee_id"] = employee.employee_id
 
-
-# TODO
-#        if employee.aliases:
-#            details["properties"]["aliases"] = employee.aliases
+        # TODO
+        #        if employee.aliases:
+        #            details["properties"]["aliases"] = employee.aliases
 
         nodes["employee"][employee.employee_id] = details
 
         for team in employee.teams:
-            relationships.append({
-                "relationship_type": "in_team",
-                "source_node": f"Employee=={employee.name}",
-                "destination_node": f"Team=={team}",
-            })
+            relationships.append(
+                {
+                    "relationship_type": "in_team",
+                    "source_node": f"Employee=={employee.name}",
+                    "destination_node": f"Team=={team}",
+                }
+            )
 
             # Create an empty node just for linking
             nodes["team"].add(team)
@@ -56,39 +57,46 @@ def main(args):
         details["properties"]["job_title"] = employee.job_title
         nodes["job"].add(employee.job_title)
 
-        relationships.append({
-            "relationship_type": "is a",
-            "source_node": f"Employee=={employee.name}",
-            "destination_node": f"Job=={employee.job_title}",
-        })
+        relationships.append(
+            {
+                "relationship_type": "is a",
+                "source_node": f"Employee=={employee.name}",
+                "destination_node": f"Job=={employee.job_title}",
+            }
+        )
 
         # Create a bare Department node and add the relationship
         details["properties"]["department"] = employee.department
         nodes["department"].add(employee.department)
 
-        relationships.append({
-            "relationship_type": "member of",
-            "source_node": f"Employee=={employee.name}",
-            "destination_node": f"Department=={employee.department}",
-        })
+        relationships.append(
+            {
+                "relationship_type": "member of",
+                "source_node": f"Employee=={employee.name}",
+                "destination_node": f"Department=={employee.department}",
+            }
+        )
 
         # Add all management relationships
         for report in employee.manages:
-            relationships.append({
-                "relationship_type": "manages",
-                "source_node": f"Employee=={employee.name}",
-                # TODO Move this to staff ID once we have 2 people with the same name
-                "destination_node": f"Employee=={report}",
-            })
+            relationships.append(
+                {
+                    "relationship_type": "manages",
+                    "source_node": f"Employee=={employee.name}",
+                    # TODO Move this to staff ID once we have 2 people with the same name
+                    "destination_node": f"Employee=={report}",
+                }
+            )
 
         for team in employee.tech_leads:
-            relationships.append({
-                "relationship_type": "tech_lead",
-                "source_node": f"Employee=={employee.name}",
-                # TODO Move this to staff ID once we have 2 people with the same name
-                "destination_node": f"Team=={team}",
-            })
-        
+            relationships.append(
+                {
+                    "relationship_type": "tech_lead",
+                    "source_node": f"Employee=={employee.name}",
+                    # TODO Move this to staff ID once we have 2 people with the same name
+                    "destination_node": f"Team=={team}",
+                }
+            )
 
     for node_type in nodes:
         if isinstance(nodes[node_type], set):
@@ -99,7 +107,12 @@ def main(args):
         collected_nodes.update(nodes[key])
 
     with open(args.output, "w") as file:
-        file.write(dump({"nodes": collected_nodes, "relationships": relationships}, Dumper=Dumper))
+        file.write(
+            dump(
+                {"nodes": collected_nodes, "relationships": relationships},
+                Dumper=Dumper,
+            )
+        )
 
 
 if __name__ == "__main__":

@@ -34,26 +34,28 @@ def main(args):
         details = {}
         details["node_type"] = "Service"
 
-        details["properties"] = {
-            "name": service.name,
-        }
+        details["properties"] = {"name": service.name}
 
-        relationships.append({
-            "relationship_type": "owns",
-            "source_node": f"Team=={service.owner}",
-            "destination_node": f"Service=={service.name}",
-        })
+        relationships.append(
+            {
+                "relationship_type": "owns",
+                "source_node": f"Team=={service.owner}",
+                "destination_node": f"Service=={service.name}",
+            }
+        )
 
         team_nodes.add(service.owner)
 
         for tech in service.technologies:
             technology_nodes.add(tech)
 
-            relationships.append({
-                "relationship_type": "uses",
-                "source_node": f"Service=={service.name}",
-                "destination_node": f"Technology=={tech}",
-            })
+            relationships.append(
+                {
+                    "relationship_type": "uses",
+                    "source_node": f"Service=={service.name}",
+                    "destination_node": f"Technology=={tech}",
+                }
+            )
 
         service_nodes[service.name] = details
 
@@ -63,7 +65,9 @@ def main(args):
     nodes.update(set_to_node("Team", team_nodes))
 
     with open(args.output, "w") as file:
-        file.write(dump({"nodes": nodes, "relationships": relationships }, Dumper=Dumper))
+        file.write(
+            dump({"nodes": nodes, "relationships": relationships}, Dumper=Dumper)
+        )
 
 
 if __name__ == "__main__":
