@@ -25,7 +25,7 @@ def _inflate_yaml(file_name):
 
 
 def load_staff(staff_file):
-    staff = _inflate_yaml(staff_file)
+    staff = _inflate_yaml(staff_file)["staff"]
 
     return staff
 
@@ -35,16 +35,18 @@ def main(args):
     people = {}
 
     # Construct the Employee objects and assign all their own data
-    for name in staff:
-        person_details = staff[name]
+    for employee_id in staff:
+        person_details = staff[employee_id]
 
-        people[name] = Employee(name, person_details)
+        people[employee_id] = Employee(employee_id, person_details)
 
     # Do a second pass and add the management relationship to the Employees
     for employee in people.values():
         for report in employee.manages:
-            people[report].set_manager(employee.name)
-            # print(f"  == Manager of {report} is {people[report].get_manager()}")
+            # Employee IDs are good but use the name to link reports to managers
+            report_id = [e.employee_id for e in people.values() if e.name == report ][0]
+
+            people[report_id].set_manager(employee.name)
 
     jinja = Environment(loader=FileSystemLoader("templates"), trim_blocks=True)
 
