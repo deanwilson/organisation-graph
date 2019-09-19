@@ -173,7 +173,8 @@ the Team node.
 
 ## OrgChart
 
-Make `bin/build-org-chart` work with the new staff hash format
+ * ~Make `bin/build-org-chart` work with the new staff hash format~
+ * Convert the orgchart to use Employee IDs for linkage
 
 ## YAML Loader Format
 

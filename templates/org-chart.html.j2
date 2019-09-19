@@ -15,7 +15,7 @@
         data.addRows([
 
 {% for person in people %}
-  [{v:'{{ person.name }}', f:'{{ person.name }}<div style="color:red; font-style:italic">{{ person.role }}</div>'}, '{{ person.get_manager() or '' }}', ''],
+  [{v:'{{ person.name }}', f:'{{ person.name }}<div style="color:red; font-style:italic">{{ person.job_title }}</div>'}, '{{ person.get_manager() or '' }}', ''],
 {% endfor %}
 
         ]);
