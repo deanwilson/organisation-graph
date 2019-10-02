@@ -32,7 +32,7 @@ user_names.each do |user_name|
     'properties' => {
       'display_name' => user.display_name
     }
-  } 
+  }
 
   node_data[user_name] = data
 
