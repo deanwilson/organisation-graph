@@ -17,7 +17,7 @@ the Neo4J database itself.
 
 Assuming you've followed the [Getting Started guide](/README.md#getting-started)
 the only additional steps you will require is to request an auth token from
-GitHub and export it into the shell you want to run the commands from 
+GitHub and export it into the shell you want to run the commands from
 
     export GITHUB_AUTH_TOKEN=asd38d97a7fdg453grgt45grtg54
 

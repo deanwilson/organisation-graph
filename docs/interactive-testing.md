@@ -14,7 +14,7 @@ with driver.session() as session:
     result = session.run(
         "MATCH (:Team { name: 'Backend' })-[r]->(rela)"
         "RETURN type(r) as relation_name, (rela.name) as remote_node_value"
-    ) 
+    )
 
 result.data()
 ```

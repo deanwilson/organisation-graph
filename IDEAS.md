@@ -12,7 +12,7 @@
     than once and add new relationships as additional sources appear
  * Link people to their GitHub IDs. Shows some value in the relationships
 
-## Data Sources 
+## Data Sources
 
 ### Enrichers
 
@@ -191,7 +191,7 @@ without requiring any custom code. The format could be something like:
       - relationship_type: NodeType[Nodename]
         properties:
           key: value
-    
+
     relationships:
     - unique_name:
       relationship_type:
@@ -199,7 +199,7 @@ without requiring any custom code. The format could be something like:
         key: value
       source_node: NodeType[Nodename]
       destination_node: NodeType[Nodename]
-    
+
 The relationships YAML could be used to link all the IDs together
 
 
@@ -218,4 +218,3 @@ Nodes are being created more than once.
 
 For employee pytests convert the test case from a hash to a loaded fixture file
 https://pypi.org/project/pytest-datadir/ might be good for per enricher fixtures
-

@@ -117,7 +117,7 @@ And as a graph
     MATCH (t:Team)-[:`tech_lead`]-(e:Employee)
     RETURN s as Service, t as Team, e as TechLead
 
-![Graph of TechLead to Service relationships](/images/service-tech-lead.png 
+![Graph of TechLead to Service relationships](/images/service-tech-lead.png
   "Neo4J node browser showing the tech lead for a service")
 
 ### Show all the team members responsible for a service

@@ -45,7 +45,7 @@ activated the `venv` in and exported the Neo4J password, run the importers.
 
     # And load it into the graph
     ./enrichers/yamlloader/yamlloader --datafile generated-data/job-nodes.yaml
-    ./enrichers/yamlloader/yamlloader --datafile generated-data/employees.yaml 
+    ./enrichers/yamlloader/yamlloader --datafile generated-data/employees.yaml
     ./enrichers/yamlloader/yamlloader --datafile generated-data/services.yaml
 
 Once this has completed, open a web browser to
@@ -61,7 +61,7 @@ explore the data.
 
 ## Example Queries
 
-This repo includes a 
+This repo includes a
 [collection of sample queries](/docs/queries.md) that give examples of the syntax and shows some of
 the possibles. You can also see a few inline examples below
 

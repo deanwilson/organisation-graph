@@ -44,7 +44,7 @@ def main(args):
     for employee in people.values():
         for report in employee.manages:
             # Employee IDs are good but use the name to link reports to managers
-            report_id = [e.employee_id for e in people.values() if e.name == report ][0]
+            report_id = [e.employee_id for e in people.values() if e.name == report][0]
 
             people[report_id].set_manager(employee.name)
 
